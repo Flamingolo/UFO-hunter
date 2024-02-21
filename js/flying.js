@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
-    let successfulClicks = 0;
+    let totalShots = 0;
+    let successfulShots = 0;
     let isPaused = false;
 
     let directionX = Math.random() < 0.5 ? -1 : 1 ; // 1 for right, -1 for left
@@ -34,28 +35,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleClick() {
+        updateCounter()
+        totalShots++;
+        
         if (!isPaused) {
-            successfulClicks++;
-            updateCounter();
+            successfulShots++;
+            
             isPaused = true;
 
             // Pause for 2 seconds and then respawn
             setTimeout(() => {
                 isPaused = false;
-                moveDufo();
+                respawnDufo();
             }, 2000);
         }
+        
     }
+    
     
     // Function to respawn the dufo at a random position
     function respawnDufo() {
         currentX = Math.random() * maxX;
         currentY = 10;
+        moveDufo();
     }
 
     // Function to update the counter on the page
     function updateCounter() {
-        document.getElementById('counter').innerText = `Successful Clicks: ${successfulClicks}`;
+        document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Total Shots: ${totalShots}`;
     }
 
     // Add click event listener to pause the dufo and respawn
