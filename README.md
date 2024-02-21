@@ -29,8 +29,7 @@ getting up from the grass, with and without duck
 
 ## Duck
 flies 5 seconds
-Starting from the grass in 80% of viewport at random location, flies 0-90 degrees ???? till the edge of the window and then bounces from there to 90 degrees(like dvd logo in screensaver)
-5 seconds
+Starting from the grass in 80% of viewport at random location, flies 0-90 degrees ???? till the edge of the window and *then bounces from there to 90 degrees(like dvd logo in screensaver)
 
 ## Shooting
 Mouse turns into crosshair when in duck flying area.

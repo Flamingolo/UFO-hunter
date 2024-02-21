@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add click event listener to pause the dufo and respawn
     dufo.addEventListener('click', handleClick);
-
+    
     // Function to start dufo movement
     function startGame() {
         moveDufo();
