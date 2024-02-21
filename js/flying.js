@@ -3,22 +3,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const maxX = window.innerWidth - duck.clientWidth;
     const maxY = window.innerHeight - duck.clientHeight;
 
-    let directionX = 1; // 1 for right, -1 for left
-    let directionY = 1; // 1 for down, -1 for up
-    let currentX = 100;
-    let currentY = 200;
+    let directionX = Math.random() < 0.5 ? -1 : 1 ; // 1 for right, -1 for left
+    let directionY = -1; // 1 for down, -1 for up
+    let currentX = Math.random() * maxX;
+    let currentY = maxY - 50;
 
     // Function to move the duck within the viewport
     function moveDuck() {
-        currentX += 3 * directionX; // You can adjust the speed by changing the value (5 in this case)
-        currentY += 5 * directionY; // You can adjust the speed by changing the value (5 in this case)
+        currentX += 4 * directionX; // Speed 
+        currentY += 7 * directionY; // Speed 
 
         // Change direction when reaching the edges
         if (currentX <= 0 || currentX >= maxX) {
             directionX *= -1;
         }
 
-        if (currentY <= 0 || currentY >= maxY) {
+        if (currentY <= 0 || currentY >= maxY - 50) {
             directionY *= -1;
         }
 
