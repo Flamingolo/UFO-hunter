@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const maxY = window.innerHeight - duck.clientHeight;
 
     let directionX = Math.random() < 0.5 ? -1 : 1 ; // 1 for right, -1 for left
-    let directionY = -1; // 1 for down, -1 for up
+    let directionY = 1; // 1 for down, -1 for up
     let currentX = Math.random() * maxX;
-    let currentY = maxY - 50;
+    let currentY = 10;
 
     // Function to move the duck within the viewport
     function moveDuck() {
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             directionX *= -1;
         }
 
-        if (currentY <= 0 || currentY >= maxY - 50) {
+        if (currentY <= 0 || currentY >= maxY - 400) {
             directionY *= -1;
         }
 
