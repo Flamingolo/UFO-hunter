@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const duck = document.getElementById('duck');
-    const maxX = window.innerWidth - duck.clientWidth;
-    const maxY = window.innerHeight - duck.clientHeight;
+    const dufo = document.getElementById('dufo');
+    const maxX = window.innerWidth - dufo.clientWidth;
+    const maxY = window.innerHeight - dufo.clientHeight;
 
     let directionX = Math.random() < 0.5 ? -1 : 1 ; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
     let currentX = Math.random() * maxX;
     let currentY = 10;
 
-    // Function to move the duck within the viewport
-    function moveDuck() {
+    // Function to move the dufo within the viewport
+    function moveDufo() {
         currentX += 4 * directionX; // Speed 
         currentY += 7 * directionY; // Speed 
 
@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
             directionY *= -1;
         }
 
-        duck.style.left = `${currentX}px`;
-        duck.style.top = `${currentY}px`;
+        dufo.style.left = `${currentX}px`;
+        dufo.style.top = `${currentY}px`;
 
-        // Call moveDuck again on the next animation frame
-        requestAnimationFrame(moveDuck);
+        // Call moveDufo again on the next animation frame
+        requestAnimationFrame(moveDufo);
     }
 
-    // Function to start duck movement
+    // Function to start dufo movement
     function startGame() {
-        moveDuck();
+        moveDufo();
     }
 
     // Event listener to start the game when the page loads
