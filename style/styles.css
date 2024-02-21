@@ -19,4 +19,5 @@ body {
     background-image: url('/assets/ufo.png');
     position: absolute;
     top: 50%;
+    border: 50px;
 }
