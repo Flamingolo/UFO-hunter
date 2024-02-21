@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const duck = document.getElementById('duck');
-    const maxX = window.innerWidth - 200 - duck.clientWidth;
+    const maxX = window.innerWidth - duck.clientWidth;
 
     let direction = 1; // 1 for right, -1 for left
     let currentX = 0;
