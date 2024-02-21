@@ -1,0 +1,12 @@
+body {
+    background-color: #113439; /* Replace with your desired color code */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+h1 {
+    color:rgb(33, 151, 108)
+}
