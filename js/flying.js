@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPaused = false;
     let score = 0
     let remainingUfos = 10
-    let respawnInterval;
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
@@ -117,22 +116,24 @@ document.addEventListener('DOMContentLoaded', function () {
     function respawnDufo() {
         currentX = Math.random() * maxX;
         currentY = 10;
+
         shotsLeft = 3
         remainingUfos--
+
         if (remainingUfos < 1) {
            score = 0
            successfulShots = 0
            remainingUfos = 10
         }
+
         updateCounter()
         updateScore()
         moveDufo();
 
-        // Clear existing interval and set a new one
-        clearInterval(respawnInterval);
-        respawnInterval = setInterval(() => {
+        // Set a new setTimeout for the next respawn
+        setTimeout(() => {
             respawnDufo();
-        }, 5000);
+        }, 5000);     
     }
 
     function updateCounter() {
@@ -158,8 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listener to start the game when the page loads
     window.addEventListener('load', startGame);
 
-    respawnInterval = setInterval(() => {
+    setTimeout(() => {
         respawnDufo();
     }, 5000);
-    
 });
