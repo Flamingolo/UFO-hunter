@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let shotsLeft = 3;
     let successfulShots = 0;
     let isPaused = false;
+    let score = 0
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
@@ -37,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
+            score = addScore(shotsLeft, score)
+            updateScore()
             if (!isPaused) {
                 isPaused = true;
                 triggerExplosion();
@@ -112,6 +115,14 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Shots Left: ${shotsLeft}`;
     }
 
+    function addScore(shotsLeft, score) {
+        return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0);
+    }
+        
+    function updateScore() {
+        document.getElementById('score').innerText = `Score: ${score}`;
+    }
+    console.log(score)
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
