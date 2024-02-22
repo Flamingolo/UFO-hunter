@@ -130,10 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateScore()
         moveDufo();
 
-        // Set a new setTimeout for the next respawn
-        setTimeout(() => {
-            respawnDufo();
-        }, 5000);     
     }
 
     function updateCounter() {
@@ -159,7 +155,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listener to start the game when the page loads
     window.addEventListener('load', startGame);
 
-    setTimeout(() => {
-        respawnDufo();
-    }, 5000);
 });
