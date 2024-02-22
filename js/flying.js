@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let successfulShots = 0;
     let isPaused = false;
 
-    let directionX = Math.random() < 0.5 ? -1 : 1 ; // 1 for right, -1 for left
+    let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
     let currentX = Math.random() * maxX;
     let currentY = 10;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 directionX *= -1;
             }
 
-            if (currentY <= 0 || currentY >= maxY -100) {
+            if (currentY <= 0 || currentY >= maxY - 100) {
                 directionY *= -1;
             }
 
@@ -34,25 +34,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function handleClick() {
-        updateCounter()
-        totalShots++;
+    function handleClick(event) {
         
-        if (!isPaused) {
+        // Check if the click target is the dufo element
+        if (event.target === dufo) {
             successfulShots++;
-            
-            isPaused = true;
+            totalShots++;
+            if (!isPaused) {
+                isPaused = true;
 
-            // Pause for 2 seconds and then respawn
-            setTimeout(() => {
-                isPaused = false;
-                respawnDufo();
-            }, 2000);
+                // Pause for 2 seconds and then respawn
+                setTimeout(() => {
+                    isPaused = false;
+                    respawnDufo();
+                }, 2000);
+            }
+        } else {
+            totalShots++
         }
-        
+
+        updateCounter();
     }
-    
-    
+
+
     // Function to respawn the dufo at a random position
     function respawnDufo() {
         currentX = Math.random() * maxX;
@@ -65,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Total Shots: ${totalShots}`;
     }
 
-    // Add click event listener to pause the dufo and respawn
-    dufo.addEventListener('click', handleClick);
-    
+    // Add click event listener to track total shots
+    document.addEventListener('click', handleClick);
+
     // Function to start dufo movement
     function startGame() {
         moveDufo();
