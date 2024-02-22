@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to move the dufo within the viewport
     function moveDufo() {
         if (!isPaused) {
-            currentX += 1 * directionX; // Speed 
-            currentY += 1 * directionY; // Speed 
+            currentX += 2 * directionX; // Speed 
+            currentY += 5 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
