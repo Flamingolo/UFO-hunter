@@ -23,3 +23,10 @@ body {
     top: 50%;
     border: 50px;
 }
+
+#explosion{
+    width: 290px;
+    height: 290px;
+    background-image: url(/assets/explosions.png);
+    background-position: 0 0; /* Starts with first frame */
+}
