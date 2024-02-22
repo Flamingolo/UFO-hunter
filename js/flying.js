@@ -28,22 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             dufo.style.left = `${currentX}px`;
             dufo.style.top = `${currentY}px`;
-
-            // Call moveDufo again on the next animation frame
+            
             requestAnimationFrame(moveDufo);
         }
     }
 
     function handleClick(event) {
-        
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
-            shotsLeft = 3;
             if (!isPaused) {
                 isPaused = true;
                 triggerExplosion();
-
                 // Pause for 2 seconds and then respawn
                 setTimeout(() => {
                     isPaused = false;
@@ -52,12 +48,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } else {
             shotsLeft--
+            if (shotsLeft < 1) {
+                isPaused = true
+                // Pause for 2 seconds and then respawn
+                setTimeout(() => {
+                    isPaused = false;
+                    respawnDufo();
+                }, 2000);
+            }
         }
-        outOfBullets()
-
         updateCounter();
     }
-
     // Explosion animation
     function triggerExplosion(){
         const explosionElement = document.getElementById('explosion');
@@ -102,21 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function respawnDufo() {
         currentX = Math.random() * maxX;
         currentY = 10;
+        shotsLeft = 3
         moveDufo();
     }
 
-    function outOfBullets() {
-        if (shotsLeft < 1) {
-            setTimeout(() => {
-                isPaused = false;
-                respawnDufo();
-            }, 2000);
-            respawnDufo()
-            shotsLeft = 3
-        }
-     }
-
-    // Function to update the counter on the page
     function updateCounter() {
         document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Shots Left: ${shotsLeft}`;
     }
@@ -124,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
-    // Function to start dufo movement
+    // Start dufo movement
     function startGame() {
         moveDufo();
     }
