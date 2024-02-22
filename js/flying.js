@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let successfulShots = 0;
     let isPaused = false;
     let score = 0
+    let remainingUfos = 10
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 directionX *= -1;
             }
 
-            if (currentY <= 0 || currentY >= maxY - 100) {
+            if (currentY <= 0 || currentY >= maxY - 200) {
                 directionY *= -1;
             }
 
@@ -116,7 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
         currentX = Math.random() * maxX;
         currentY = 10;
         shotsLeft = 3
+        remainingUfos--
         updateCounter()
+        updateScore()
         moveDufo();
     }
 
@@ -130,8 +133,8 @@ document.addEventListener('DOMContentLoaded', function () {
         
     function updateScore() {
         document.getElementById('score').innerText = `Score: ${score}`;
+        document.getElementById('targetsLeft').innerText = `Remaining Ufos: ${remainingUfos}`
     }
-    console.log(score)
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
