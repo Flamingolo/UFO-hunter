@@ -29,6 +29,7 @@ body {
     height: 290px;
     background-image: url(/assets/explosions.png);
     background-position: 0 0; /* Starts with first frame */
+    background-position: absolute;
 }
 
 .hud {
