@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             shotsLeft = 3;
             if (!isPaused) {
                 isPaused = true;
+                triggerExplosion();
 
                 // Pause for 2 seconds and then respawn
                 setTimeout(() => {
@@ -56,6 +57,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
         updateCounter();
     }
+
+    // Explosion animation
+    function triggerExplosion(){
+        const explosionElement = document.getElementById('explosion');
+        explosionElement.style.display = 'block';
+        let currentFrame = 0;
+        const totalFrames = 8;
+        const frameSize = 290;
+        const animationDuration = 2000;
+        const frameDuration = animationDuration / totalFrames;
+        explosionElement.style.display = 'block'
+
+        const dufoRect = dufo.getBoundingClientRect();
+        explosionElement.style.left = `${dufoRect.left}px`;
+        explosionElement.style.top = `${dufoRect.top}px`;
+
+        function animateExplosion(){
+            if (currentFrame < totalFrames){
+                let row = Math.floor(currentFrame / 4)
+                let col = currentFrame % 4;
+                explosionElement.style.backgroundPosition = `-${col * frameSize}px -${row * frameSize}px`;
+
+                currentFrame++;
+                if (currentFrame < totalFrames){
+                    setTimeout(animateExplosion, frameDuration);
+                } else {
+                    explosionElement.style.display = 'none';
+                    explosionElement.style.backgroundPosition = '0 0';
+                }
+            }
+            animateExplosion();
+        }
+    }
+
+
+    dufo.addEventListener('click', function(){
+        triggerExplosion();
+        updateCounter();
+    })
 
 
     // Function to respawn the dufo at a random position
