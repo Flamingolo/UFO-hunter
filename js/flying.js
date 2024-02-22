@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCounter() {
-        document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Shots Left: ${shotsLeft}`;
+        document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
     }
 
     function addScore(shotsLeft, score) {
