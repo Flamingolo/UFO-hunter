@@ -9,6 +9,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     overflow: hidden;
+    
 }
 
 .game-container {
@@ -34,8 +35,9 @@ body {
 
 .hud {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: yellow;
+    justify-content: space-evenly;
+    flex-direction: row;
     color: yellow;
 }
 
