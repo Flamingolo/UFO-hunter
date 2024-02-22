@@ -1,3 +1,5 @@
+// import { triggerExplosion } from "./explosion.js";
+
 document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
@@ -34,6 +36,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function triggerExplosion(x, y) {
+        const explosion = document.getElementById('explosion');
+        explosion.style.display = 'block';
+        explosion.style.left = x + 'px';
+        explosion.style.top = y + 'px';
+    
+        const frameWidth = 290;
+        const frameHeight = 290;
+        let currentFrame = 0;
+        const totalFrames = 8;
+        let row = 0;
+    
+        function animateExplosion(){
+            const column = currentFrame % 4;
+            const xPosition = -(column * frameWidth);
+            const yPosition = -(row * frameHeight);
+            explosion.style.backgroundPosition = `${xPosition}px ${yPosition}px`;
+    
+            currentFrame++
+    
+            if (currentFrame % 4 === 0){
+                row++
+            }
+    
+            if (currentFrame < totalFrames){
+                requestAnimationFrame(animateExplosion);
+            } else {
+                explosion.style.display = 'none';
+            }
+        }
+    
+        animateExplosion();
+    }
+
     function handleClick(event) {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
@@ -42,8 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
             updateScore()
             if (!isPaused) {
                 isPaused = true;
-                triggerExplosion();
                 // Pause for 2 seconds and then respawn
+                const rect = dufo.getBoundingClientRect();
+                triggerExplosion(rect.left, rect.top);
                 setTimeout(() => {
                     isPaused = false;
                     respawnDufo();
@@ -62,44 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         updateCounter();
     }
-    // Explosion animation
-    function triggerExplosion(){
-        const explosionElement = document.getElementById('explosion');
-        explosionElement.style.display = 'block';
-        let currentFrame = 0;
-        const totalFrames = 8;
-        const frameSize = 290;
-        const animationDuration = 2000;
-        const frameDuration = animationDuration / totalFrames;
-        explosionElement.style.display = 'block'
-
-        const dufoRect = dufo.getBoundingClientRect();
-        explosionElement.style.left = `${dufoRect.left}px`;
-        explosionElement.style.top = `${dufoRect.top}px`;
-
-        function animateExplosion(){
-            if (currentFrame < totalFrames){
-                let row = Math.floor(currentFrame / 4)
-                let col = currentFrame % 4;
-                explosionElement.style.backgroundPosition = `-${col * frameSize}px -${row * frameSize}px`;
-
-                currentFrame++;
-                if (currentFrame < totalFrames){
-                    setTimeout(animateExplosion, frameDuration);
-                } else {
-                    explosionElement.style.display = 'none';
-                    explosionElement.style.backgroundPosition = '0 0';
-                }
-            }
-            animateExplosion();
-        }
-    }
-
-
-    dufo.addEventListener('click', function(){
-        triggerExplosion();
-        updateCounter();
-    })
 
 
     // Function to respawn the dufo at a random position
