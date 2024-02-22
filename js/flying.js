@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentX = Math.random() * maxX;
         currentY = 10;
         shotsLeft = 3
+        updateCounter()
         moveDufo();
     }
 
