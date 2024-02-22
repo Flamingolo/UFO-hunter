@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(() => {
                     isPaused = false;
                     respawnDufo();
-                }, 2000);
+                }, 500);
             }
         } else {
             shotsLeft--
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(() => {
                     isPaused = false;
                     respawnDufo();
-                }, 2000);
+                }, 500);
             }
         }
         updateCounter();
