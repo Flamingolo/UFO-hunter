@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
-    let totalShots = 0;
+    let shotsLeft = 3;
     let successfulShots = 0;
     let isPaused = false;
 
@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to move the dufo within the viewport
     function moveDufo() {
         if (!isPaused) {
-            currentX += 2 * directionX; // Speed 
-            currentY += 3 * directionY; // Speed 
+            currentX += 1 * directionX; // Speed 
+            currentY += 1 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
-            totalShots++;
+            shotsLeft = 3;
             if (!isPaused) {
                 isPaused = true;
 
@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 2000);
             }
         } else {
-            totalShots++
+            shotsLeft--
         }
+        outOfBullets()
 
         updateCounter();
     }
@@ -64,9 +65,20 @@ document.addEventListener('DOMContentLoaded', function () {
         moveDufo();
     }
 
+    function outOfBullets() {
+        if (shotsLeft < 1) {
+            setTimeout(() => {
+                isPaused = false;
+                respawnDufo();
+            }, 2000);
+            respawnDufo()
+            shotsLeft = 3
+        }
+     }
+
     // Function to update the counter on the page
     function updateCounter() {
-        document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Total Shots: ${totalShots}`;
+        document.getElementById('counter').innerText = `Successful Shots: ${successfulShots} / Shots Left: ${shotsLeft}`;
     }
 
     // Add click event listener to track total shots
