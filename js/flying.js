@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const explosionHeight = 290;
 
         const centerX = x + (dufoWidth / 2) - (explosionWidth / 2);
-        const centerY = y + (dufoHeight / 2) - (explosionHeight / 2);
+        const centerY = y + -20 + (dufoHeight / 2) - (explosionHeight / 2);
 
         explosion.style.display = 'block';
         explosion.style.position = 'absolute';
@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', function () {
         currentY = 10;
         shotsLeft = 3
         remainingUfos--
+        if (remainingUfos < 1) {
+           score = 0
+           successfulShots = 0
+           remainingUfos = 10
+        }
         updateCounter()
         updateScore()
         moveDufo();
@@ -128,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function addScore(shotsLeft, score) {
-        return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0);
+        return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
     }
         
     function updateScore() {
@@ -141,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Start dufo movement
     function startGame() {
         moveDufo();
+
     }
 
     // Event listener to start the game when the page loads
