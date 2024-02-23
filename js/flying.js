@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to move the dufo within the viewport
     function moveDufo() {
         if (!isPaused) {
-            currentX += 0 * directionX; // Speed 
-            currentY += 0 * directionY; // Speed 
+            currentX += 1 * directionX; // Speed 
+            currentY += 1 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const explosionHeight = 290;
 
         const centerX = x + (dufoWidth / 2) - (explosionWidth / 2);
-        const centerY = y + -20 + (dufoHeight / 2) - (explosionHeight / 2);
+        const centerY = y + -25 + (dufoHeight / 2) - (explosionHeight / 2);
 
         explosion.style.display = 'block';
         explosion.style.position = 'absolute';
