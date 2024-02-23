@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to move the dufo within the viewport
     function moveDufo() {
         if (!isPaused) {
-            currentX += 1 * directionX; // Speed 
-            currentY += 1 * directionY; // Speed 
+            currentX += 0 * directionX; // Speed 
+            currentY += 0 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         updateCounter();
+        updateTargetsLeft();
     }
 
 
@@ -126,8 +127,9 @@ document.addEventListener('DOMContentLoaded', function () {
            remainingUfos = 10
         }
 
-        updateCounter()
-        updateScore()
+        updateCounter();
+        updateScore();
+        updateTargetsLeft();
         moveDufo();
 
     }
@@ -136,17 +138,19 @@ document.addEventListener('DOMContentLoaded', function () {
     //     document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
     // }
 
-    function updateCounter() {
-        // This assumes that each sprite in your sprite sheet for the counter is 100px wide
-        const shotWidth = 100; // Width of each shot sprite in your sprite sheet
-        const shotsPosition = -((3 - shotsLeft) * shotWidth); // Calculate the background position
-    
+    function updateCounter() { 
         const counter = document.getElementById('counter');
-        counter.style.backgroundPosition = `${shotsPosition}px 0px`; // Update the background position
-        counter.style.opacity = shotsLeft === 0 ? 0.25 : 1; // Set opacity to 25% if no shots left
-    
-        // Update the text if needed, or you can remove the text content if using sprites only
-        counter.innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
+        counter.style.backgroundPosition = `${-25 * (3- shotsLeft)}px 0px`
+        counter.style.opacity = shotsLeft === 0 ? 0.25 : 1;
+    }
+
+    function updateTargetsLeft(){
+        const targetsLeft = document.getElementById('targetsLeft');
+        targetsLeft.style.backgroundPosition = `${-100 * (10 - remainingUfos)}px 0px`;
+
+        
+
+        document.getElementById('targetsLeft2').innerText = `Remaining Ufos: ${remainingUfos}`
     }
 
     function addScore(shotsLeft, score) {
@@ -159,18 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // }
 
     function updateScore() {
-        const scoreElement = document.getElementById('score');
-        const targetsLeftElement = document.getElementById('targetsLeft');
-    
+        const scoreElement = document.getElementById('score');    
         scoreElement.innerText = `Score: ${score}`;
-        
-        // Assuming each target sprite is 100px wide in your sprite sheet
-        const targetWidth = 100; // Width of each target sprite in your sprite sheet
-        const targetsPosition = -((10 - remainingUfos) * targetWidth); // Calculate the background position
-    
-        targetsLeftElement.style.backgroundPosition = `${targetsPosition}px 0px`; // Update the background position
-        targetsLeftElement.style.opacity = remainingUfos === 0 ? 1 : 0.25; // Set opacity to 100% if no targets left
-        targetsLeftElement.innerText = `Remaining Ufos: ${remainingUfos}`;
     }
 
     // Add click event listener to track total shots
