@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } else {
             shotsLeft--
-           
             if (shotsLeft < 1) {
                 createUFOIndicators()
                 updateUFOIndicators();
@@ -125,8 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        updateScore()
-        updateUFOIndicators();
         updateBulletIndicators();
     }
 
@@ -154,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         updateBulletIndicators();
         updateUFOIndicators();
+        updateScore()
         moveDufo();
         
     }
@@ -182,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
-        for (let i = 10; i > remainingUfos; i--){
+        for (let i = 10; i >= remainingUfos; i--){
             const ufoIndicator = document.createElement('div');
             ufoIndicator.className = 'ufoIndicator';
             ufosContainer.appendChild(ufoIndicator)
@@ -201,14 +199,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateUFOIndicators(){
         const ufoIndicators = document.querySelectorAll('.ufoIndicator');
         ufoIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < successfulShots ? '0.5' : '1';
+            indicator.style.opacity = index <= successfulShots ? '0.33' : '1';
         });
     }
 
     function updateBulletIndicators(){
         const bulletIndicators = document.querySelectorAll('.bulletIndicator');
         bulletIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < 3 - shotsLeft ? '0.25' : '1';
+            indicator.style.opacity = index < 3 - shotsLeft ? '0.33' : '1';
         });
     }
 
