@@ -28,7 +28,7 @@ body {
 #explosion{
     width: 290px;
     height: 290px;
-    background-image: url(/assets/explosions.png);
+    background-image: url('/assets/explosions.png');
     background-position: 0 0; /* Starts with first frame */
     background-position: absolute;
 }
@@ -46,3 +46,16 @@ body {
  align-self: flex-end;
 
 }
+
+#counter{
+    background-image: url('/assets/bullet.png');
+    background-position: 0px 0px;
+    opacity: 1;
+}
+
+#targestLeft{
+    background-image: url('/assets/ufo_sprite.png');
+    background-position: 0px 0px;
+    opacity: 0.25;
+}
+

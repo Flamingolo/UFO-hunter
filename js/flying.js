@@ -132,18 +132,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    // function updateCounter() {
+    //     document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
+    // }
+
     function updateCounter() {
-        document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
+        // This assumes that each sprite in your sprite sheet for the counter is 100px wide
+        const shotWidth = 100; // Width of each shot sprite in your sprite sheet
+        const shotsPosition = -((3 - shotsLeft) * shotWidth); // Calculate the background position
+    
+        const counter = document.getElementById('counter');
+        counter.style.backgroundPosition = `${shotsPosition}px 0px`; // Update the background position
+        counter.style.opacity = shotsLeft === 0 ? 0.25 : 1; // Set opacity to 25% if no shots left
+    
+        // Update the text if needed, or you can remove the text content if using sprites only
+        counter.innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
     }
 
     function addScore(shotsLeft, score) {
         return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
     }
         
+    // function updateScore() {
+    //     document.getElementById('score').innerText = `Score: ${score}`;
+    //     document.getElementById('targetsLeft').innerText = `Remaining Ufos: ${remainingUfos}`
+    // }
+
     function updateScore() {
-        document.getElementById('score').innerText = `Score: ${score}`;
-        document.getElementById('targetsLeft').innerText = `Remaining Ufos: ${remainingUfos}`
+        const scoreElement = document.getElementById('score');
+        const targetsLeftElement = document.getElementById('targetsLeft');
+    
+        scoreElement.innerText = `Score: ${score}`;
+        
+        // Assuming each target sprite is 100px wide in your sprite sheet
+        const targetWidth = 100; // Width of each target sprite in your sprite sheet
+        const targetsPosition = -((10 - remainingUfos) * targetWidth); // Calculate the background position
+    
+        targetsLeftElement.style.backgroundPosition = `${targetsPosition}px 0px`; // Update the background position
+        targetsLeftElement.style.opacity = remainingUfos === 0 ? 1 : 0.25; // Set opacity to 100% if no targets left
+        targetsLeftElement.innerText = `Remaining Ufos: ${remainingUfos}`;
     }
+
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
