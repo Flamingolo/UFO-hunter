@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // }
 
     function createUFOIndicators(){
-        document.getElementById('targetsLeft').innerHTML = '';
+        ufosContainer.innerHTML = '';
         for (let i = 0; i < remainingUfos; i++){
             const ufoIndicator = document.createElement('div');
             ufoIndicator.className = 'ufoIndicator';
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createBulletIndicators(){
-        document.getElementById('counter').innerHTML = '';
+        bulletsContainer.innerHTML = '';
         for (let i = 0; i < shotsLeft; i++){
             const bulletIndicator = document.createElement('div');
             bulletIndicator.className = 'bulletIndicator';
