@@ -100,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
-            
+            createUFOIndicators()
+            updateUFOIndicators();
             score = addScore(shotsLeft, score)
             updateScore()
             if (!isPaused) {
@@ -116,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
             shotsLeft--
            
             if (shotsLeft < 1) {
+                createUFOIndicators()
+                updateUFOIndicators();
                 isPaused = true
                 // Pause for 2 seconds and then respawn
                 setTimeout(() => {
@@ -158,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBulletIndicators();
         updateUFOIndicators();
         moveDufo();
+        
 
     }
 
@@ -176,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
             score = 0;
             successfulShots = 0;
             remainingUfos = 10;
-            createUFOIndicators();
+            // createUFOIndicators();
         }
         updateBulletIndicators();
         updateUFOIndicators();
@@ -189,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
-        for (let i = 0; i < remainingUfos; i++){
+        for (let i = 10; i > remainingUfos; i--){
             const ufoIndicator = document.createElement('div');
             ufoIndicator.className = 'ufoIndicator';
             ufosContainer.appendChild(ufoIndicator)
