@@ -1,6 +1,9 @@
-// import { triggerExplosion } from "./explosion.js";
+// import { moveDufo } from '.dufoMovement.js';
+
 
 document.addEventListener('DOMContentLoaded', function () {
+    
+
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
@@ -9,6 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPaused = false;
     let score = 0
     let remainingUfos = 10
+
+    const ufosContainer = document.createElement('div');
+    ufosContainer.id = 'ufosContainer'
+    const bulletsContainer = document.createElement('div');
+    bulletsContainer.id = 'bulletsContainer'
+    
+    document.querySelector('.hud').appendChild(ufosContainer)
+    document.querySelector('.hud').appendChild(bulletsContainer)
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
@@ -86,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
+            updateUFOIndicators();
             score = addScore(shotsLeft, score)
             updateScore()
             if (!isPaused) {
@@ -99,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } else {
             shotsLeft--
+            updateBulletIndicators();
             if (shotsLeft < 1) {
                 isPaused = true
                 // Pause for 2 seconds and then respawn
@@ -108,13 +121,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
         }
-        updateCounter();
-        updateTargetsLeft();
+        // updateCounter();
+        // updateTargetsLeft();
+        updateScore()
     }
 
 
     // Function to respawn the dufo at a random position
     function respawnDufo() {
+        
         currentX = Math.random() * maxX;
         currentY = 10;
 
@@ -127,9 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
            remainingUfos = 10
         }
 
-        updateCounter();
-        updateScore();
-        updateTargetsLeft();
+        // updateCounter();
+        // updateTargetsLeft();
         moveDufo();
 
     }
@@ -138,20 +152,59 @@ document.addEventListener('DOMContentLoaded', function () {
     //     document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
     // }
 
-    function updateCounter() { 
-        const counter = document.getElementById('counter');
-        counter.style.backgroundPosition = `${-25 * (3- shotsLeft)}px 0px`
-        counter.style.opacity = shotsLeft === 0 ? 0.25 : 1;
+    function createUFOIndicators(){
+        document.getElementById('targetsLeft').innerHTML = '';
+        for (let i = 0; i < remainingUfos; i++){
+            const ufoIndicator = document.createElement('div');
+            ufoIndicator.className = 'ufoIndicator';
+            ufosContainer.appendChild(ufoIndicator)
+        }
     }
 
-    function updateTargetsLeft(){
-        const targetsLeft = document.getElementById('targetsLeft');
-        targetsLeft.style.backgroundPosition = `${-100 * (10 - remainingUfos)}px 0px`;
+    function createBulletIndicators(){
+        document.getElementById('counter').innerHTML = '';
+        for (let i = 0; i < shotsLeft; i++){
+            const bulletIndicator = document.createElement('div');
+            bulletIndicator.className = 'bulletIndicator';
+            bulletsContainer.appendChild(bulletIndicator)
+        }
+    }
 
+    function updateUFOIndicators(){
+        const ufoIndicators = document.querySelectorAll('.ufoIndicator');
+        ufoIndicators.forEach((indicator, index) => {
+            indicator.style.opacity = index < successfulShots ? '0.5' : '1';
+        });
+    }
+
+    function updateBulletIndicators(){
+        const bulletIndicators = document.querySelectorAll('.bulletIndicator');
+        bulletIndicators.forEach((indicator, index) => {
+            indicator.style.opacity = index < 3 - shotsLeft ? '0.25' : '1';
+        });
+    }
+
+
+    // function updateCounter() { 
+    //     const counter = document.getElementById('counter');
+    //     counter.style.backgroundPosition = `${-25 * (10 - remainingUfos)}px 0px`
+    //     counter.style.opacity = shotsLeft === 0 ? 0.25 : 1;
         
+    //     document.getElementById('counterText').innerText = `Shots Left: ${shotsLeft}`;
 
-        document.getElementById('targetsLeft2').innerText = `Remaining Ufos: ${remainingUfos}`
-    }
+    // }
+
+    // function updateTargetsLeft(){
+    //     const targetsLeft = document.getElementById('targetsLeft');
+    //     const hitUfos = 10 - remainingUfos
+    //     targetsLeft.style.backgroundPosition = `${-100 * (10 -remainingUfos)}px 0px`;
+
+    //     if (hitUfos > 0){
+    //         targetsLeft.style.opacity = 1
+    //     }
+
+    //     document.getElementById('targetsLeft2').innerText = `Remaining Ufos: ${remainingUfos}`
+    // }
 
     function addScore(shotsLeft, score) {
         return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
@@ -172,7 +225,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start dufo movement
     function startGame() {
-        moveDufo();
+        createUFOIndicators();
+        createBulletIndicators();
+        moveDufo(dufo, maxX, maxY, directionX, directionY, currentX, currentY, isPaused);
+
     }
 
     // Event listener to start the game when the page loads

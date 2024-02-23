@@ -43,7 +43,7 @@ body {
 
 .hudContainer {
     width: 100%;
-    height: 250px;
+    /* height: 250px; */
  align-self: flex-end;
 
 }
@@ -70,3 +70,18 @@ body {
     opacity: 0.50;
 }
 
+.ufoIndicator, .bulletIndicator {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin: 2px;
+    background-size: contain;
+}
+
+.ufoIndicator {
+    background-image: url('/assets/ufo_sprite.png');
+}
+
+.bulletIndicator {
+    background-image: url('/assets/bullet.png');
+}
