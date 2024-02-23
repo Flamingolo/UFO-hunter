@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateUFOIndicators(){
         const ufoIndicators = document.querySelectorAll('.ufoIndicator');
         ufoIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < remainingUfos ? '0.5' : '1';
+            indicator.style.opacity = index < successfulShots ? '0.5' : '1';
         });
     }
 
