@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const frameHeight = 290;
         let currentFrame = 0;
         const totalFrames = 8;
-        let frameDuration = 7; // The duration each frame is shown, calculated as above
+        let frameDuration = 5; // The duration each frame is shown, calculated as above
         let frameCounter = 0; // Counter to track how long a frame has been displayed
     
         // Function to animate the explosion frames
