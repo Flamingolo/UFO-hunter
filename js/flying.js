@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
-            updateUFOIndicators();
+            
             score = addScore(shotsLeft, score)
             updateScore()
             if (!isPaused) {
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } else {
             shotsLeft--
-            updateBulletIndicators();
+           
             if (shotsLeft < 1) {
                 isPaused = true
                 // Pause for 2 seconds and then respawn
@@ -124,6 +124,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // updateCounter();
         // updateTargetsLeft();
         updateScore()
+        updateUFOIndicators();
+        updateBulletIndicators();
     }
 
 
@@ -144,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // updateCounter();
         // updateTargetsLeft();
+        updateBulletIndicators();
+        updateUFOIndicators();
         moveDufo();
 
     }
@@ -173,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateUFOIndicators(){
         const ufoIndicators = document.querySelectorAll('.ufoIndicator');
         ufoIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < successfulShots ? '0.5' : '1';
+            indicator.style.opacity = index < remainingUfos ? '0.5' : '1';
         });
     }
 
@@ -210,11 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
     }
         
-    // function updateScore() {
-    //     document.getElementById('score').innerText = `Score: ${score}`;
-    //     document.getElementById('targetsLeft').innerText = `Remaining Ufos: ${remainingUfos}`
-    // }
-
     function updateScore() {
         const scoreElement = document.getElementById('score');    
         scoreElement.innerText = `Score: ${score}`;
@@ -227,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         createUFOIndicators();
         createBulletIndicators();
-        moveDufo(dufo, maxX, maxY, directionX, directionY, currentX, currentY, isPaused);
+        moveDufo();
 
     }
 
