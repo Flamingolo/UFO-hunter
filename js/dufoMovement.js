@@ -18,4 +18,3 @@ export function moveDufo(dufo, maxX, maxY, directionX, directionY, currentX, cur
         requestAnimationFrame(() => moveDufo(dufo, maxX, maxY, directionX, directionY, currentX, currentY, isPaused));
     }
 }
-

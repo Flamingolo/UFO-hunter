@@ -1,17 +1,14 @@
-// import { moveDufo } from '.dufoMovement.js';
-
-
 document.addEventListener('DOMContentLoaded', function () {
-    
 
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
+    
+    let isPaused = false;
     let shotsLeft = 3;
     let successfulShots = 0;
-    let isPaused = false;
-    let score = 0
     let remainingUfos = 10
+    let score = 0
 
     const ufosContainer = document.createElement('div');
     ufosContainer.id = 'ufosContainer'
@@ -29,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentX = Math.random() * maxX;
     let currentY = 10;
 
-    // Function to move the dufo within the viewport
+    //Function to move the dufo within the viewport
     function moveDufo() {
         if (!isPaused) {
             currentX += 1 * directionX; // Speed 
-            currentY += 1 * directionY; // Speed 
+            currentY += 0 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
@@ -127,8 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
         }
-        // updateCounter();
-        // updateTargetsLeft();
+
         updateScore()
         updateUFOIndicators();
         updateBulletIndicators();
@@ -156,23 +152,20 @@ document.addEventListener('DOMContentLoaded', function () {
            remainingUfos = 10
         }
 
-        // updateCounter();
-        // updateTargetsLeft();
         updateBulletIndicators();
         updateUFOIndicators();
         moveDufo();
         
-
     }
 
-    function moveUFOToLanded(){
-        remainingUfos--;
-        const landedUfoIndicator = document.createElement('div');
-        landedUfoIndicator.className = 'ufoIndicator landed';
-        landedUfoContainer.appendChild(landedUfoIndicator);
-        updateUFOIndicators();
-        resetForNextUFO();
-    }
+    // function moveUFOToLanded(){
+    //     remainingUfos--;
+    //     const landedUfoIndicator = document.createElement('div');
+    //     landedUfoIndicator.className = 'ufoIndicator landed';
+    //     landedUfoContainer.appendChild(landedUfoIndicator);
+    //     updateUFOIndicators();
+    //     resetForNextUFO();
+    // }
 
     function resetForNextUFO(){
         shotsLeft = 3;
@@ -186,10 +179,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateUFOIndicators();
         moveDufo();
     }
-
-    // function updateCounter() {
-    //     document.getElementById('counter').innerText = `Shots at target: ${successfulShots} / Shots Left: ${shotsLeft}`;
-    // }
 
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
@@ -224,27 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // function updateCounter() { 
-    //     const counter = document.getElementById('counter');
-    //     counter.style.backgroundPosition = `${-25 * (10 - remainingUfos)}px 0px`
-    //     counter.style.opacity = shotsLeft === 0 ? 0.25 : 1;
-        
-    //     document.getElementById('counterText').innerText = `Shots Left: ${shotsLeft}`;
-
-    // }
-
-    // function updateTargetsLeft(){
-    //     const targetsLeft = document.getElementById('targetsLeft');
-    //     const hitUfos = 10 - remainingUfos
-    //     targetsLeft.style.backgroundPosition = `${-100 * (10 -remainingUfos)}px 0px`;
-
-    //     if (hitUfos > 0){
-    //         targetsLeft.style.opacity = 1
-    //     }
-
-    //     document.getElementById('targetsLeft2').innerText = `Remaining Ufos: ${remainingUfos}`
-    // }
-
     function addScore(shotsLeft, score) {
         return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
     }
@@ -252,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateScore() {
         const scoreElement = document.getElementById('score');    
         scoreElement.innerText = `Score: ${score}`;
+        document.getElementById('remaining').innerText = `Remaining: ${remainingUfos}`
     }
 
     // Add click event listener to track total shots
@@ -262,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
         createUFOIndicators();
         createBulletIndicators();
         moveDufo();
-
     }
 
     // Event listener to start the game when the page loads
