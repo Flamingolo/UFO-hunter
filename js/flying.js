@@ -17,8 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
     ufosContainer.id = 'ufosContainer'
     const bulletsContainer = document.createElement('div');
     bulletsContainer.id = 'bulletsContainer'
+    const landedUfoContainer = document.createElement('div');
+    landedUfoContainer.id = 'landedUfosContainer';
     
     document.querySelector('.hud').appendChild(ufosContainer)
+    document.querySelector('.hud').appendChild(landedUfoContainer)
     document.querySelector('.hud').appendChild(bulletsContainer)
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
@@ -138,6 +141,12 @@ document.addEventListener('DOMContentLoaded', function () {
         shotsLeft = 3
         remainingUfos--
 
+        if (shotsLeft === 0 && !isPaused){
+            moveUFOToLanded();
+        } else {
+            resetForNextUFO();
+        }
+
         if (remainingUfos < 1) {
            score = 0
            successfulShots = 0
@@ -150,6 +159,28 @@ document.addEventListener('DOMContentLoaded', function () {
         updateUFOIndicators();
         moveDufo();
 
+    }
+
+    function moveUFOToLanded(){
+        remainingUfos--;
+        const landedUfoIndicator = document.createElement('div');
+        landedUfoIndicator.className = 'ufoIndicator landed';
+        landedUfoContainer.appendChild(landedUfoIndicator);
+        updateUFOIndicators();
+        resetForNextUFO();
+    }
+
+    function resetForNextUFO(){
+        shotsLeft = 3;
+        if (remainingUfos < 1){
+            score = 0;
+            successfulShots = 0;
+            remainingUfos = 10;
+            createUFOIndicators();
+        }
+        updateBulletIndicators();
+        updateUFOIndicators();
+        moveDufo();
     }
 
     // function updateCounter() {
