@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
     bulletsContainer.id = 'bulletsContainer'
     const landedUfoContainer = document.createElement('div');
     landedUfoContainer.id = 'landedUfosContainer';
-    
+
+    document.querySelector('.hud').appendChild(bulletsContainer)
     document.querySelector('.hud').appendChild(ufosContainer)
     document.querySelector('.hud').appendChild(landedUfoContainer)
-    document.querySelector('.hud').appendChild(bulletsContainer)
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function moveDufo() {
         if (!isPaused) {
             currentX += 1 * directionX; // Speed 
-            currentY += 0 * directionY; // Speed 
+            currentY += 1 * directionY; // Speed 
 
             // Change direction when reaching the edges
             if (currentX <= 0 || currentX >= maxX) {
@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', function () {
         shotsLeft = 3
         remainingUfos--
 
-        if (shotsLeft === 0 && !isPaused){
-            moveUFOToLanded();
-        } else {
-            resetForNextUFO();
-        }
+        // if (shotsLeft === 0 && !isPaused){
+        //     moveUFOToLanded();
+        // } else {
+        //     resetForNextUFO();
+        // }
 
         if (remainingUfos < 1) {
            score = 0
@@ -167,18 +167,18 @@ document.addEventListener('DOMContentLoaded', function () {
     //     resetForNextUFO();
     // }
 
-    function resetForNextUFO(){
-        shotsLeft = 3;
-        if (remainingUfos < 1){
-            score = 0;
-            successfulShots = 0;
-            remainingUfos = 10;
-            // createUFOIndicators();
-        }
-        updateBulletIndicators();
-        updateUFOIndicators();
-        moveDufo();
-    }
+    // function resetForNextUFO(){
+    //     shotsLeft = 3;
+    //     if (remainingUfos < 1){
+    //         score = 0;
+    //         successfulShots = 0;
+    //         remainingUfos = 10;
+    //         // createUFOIndicators();
+    //     }
+    //     updateBulletIndicators();
+    //     updateUFOIndicators();
+    //     moveDufo();
+    // }
 
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
