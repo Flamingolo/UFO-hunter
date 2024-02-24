@@ -13,13 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
-    
-    let isPaused = false;
-    let remainingShots = 3;
-    let successfulShots = 0;
+    const pauseScreen = document.getElementById('pauseScreen');
+    const startScreen = document.getElementById('startScreen');
+
+    let gameStarted = false;
+    let isPaused = true
+    let remainingShots = 3
+    let successfulShots = 0
     let remainingUfos = 10
     let score = 0
-    let startTime = Date.now();
+    let startTime = Date.now()
 
     const ufosContainer = document.createElement('div');
     ufosContainer.id = 'ufosContainer'
@@ -65,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleClick(event) {
-        if (event.target === dufo) {
+        if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
             score = addScore(remainingShots, score)
             updateScore(score, remainingUfos)
@@ -78,8 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
         } else {
-            remainingShots--
+            
             if (!isPaused) {
+                remainingShots--
                 if (remainingShots < 1) {
                     isPaused = true
                     setTimeout(() => {
@@ -116,60 +120,58 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function randomLocation() {
+        directionX = Math.random() < 0.5 ? -1 : 1;
+        directionY = 1;
         currentX = Math.random() * maxX;
         currentY = 10;
     }
 
     window.addEventListener('keydown', function (event) {
-        if (event.code === 'Escape' || event.code === 'Space') {
+        if (gameStarted && (event.code === 'Escape' || event.code === 'Space')) {
+            togglePause();
             if (isPaused) {
-                if (event.code === 'Escape' || event.code === 'Space') {
-                    togglePause();
-                } else if (event.code === 'KeyR' || event.code === 'Keyr') {
-                    restartGame();
-                }
+                pauseScreen.style.display = 'block'
             } else {
-                togglePause();
+                pauseScreen.style.display = 'none'
             }
         }
-    });
+    })
+
+    window.addEventListener('keydown', function (event) {
+        if (isPaused && event.code === 'KeyR' || event.code === 'Keyr') {
+            startTime = Date.now();
+            randomLocation() 
+            togglePause()
+            remainingShots = 3
+            remainingUfos = 10
+            score = 0
+            
+            updateUFOIndicators(successfulShots);
+            updateBulletIndicators(remainingShots)
+            updateScore(score, remainingUfos)   
+            pauseScreen.style.display = 'none';    
+        } 
+    })
 
     function togglePause() {
         isPaused = !isPaused;
     }
 
-    function restartGame() {
-        startTime = Date.now();
-        randomLocation() 
-        togglePause()
-        remainingShots = 3
-        remainingUfos = 10
-        score = 0
-        updateUFOIndicators(successfulShots);
-        updateBulletIndicators(remainingShots)
-        updateScore(score, remainingUfos)   
-
-    }
-
-    // window.addEventListener('keydown', function (event) {
-    //     if (isPaused) {
-    //         if (event.code === 'Space') {
-    //             togglePause();
-    //         } else if (event.code === 'KeyR') {
-    //             restartGame();
-    //         }
-    //     }
-    // });
-
-    
-
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
-    // Start dufo movement
     function startGame() {
+        startScreen.style.display = 'block';
         createBulletIndicators(remainingShots);
-        gameLoop();
+        
+        window.addEventListener('keydown', function (event) {
+            if (!gameStarted && event.code === 'Enter') {
+                togglePause();
+                gameLoop();
+                startScreen.style.display = 'none';
+                gameStarted = true; // Set gameStarted to true to prevent starting again
+            }
+        });
     }
 
     // Event listener to start the game when the page loads

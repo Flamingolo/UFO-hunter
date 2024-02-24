@@ -11,16 +11,28 @@
 </head>
 <body>
 
+
+    
     <div class="game-container">
         <div class="dufo" id="dufo"></div>
         <div id="explosion" style="display: none;"></div>
     </div>
+    <div id="pauseScreen" class="pause-screen">
+        <p>Game Paused</p>
+        <p>Press Space/Escape to continue or R to restart</p>
+    </div>
+    <div id="startScreen" class="start-screen">
+        <p>Shoot down the UFO!</p><br>
+        <p>Press Enter to start the Game</p>
+        <p>To pause the game press Space or Escape</p>
+        <p>Restart with the R key</p>
+    </div>
     <div class="hudContainer">
         <div class="hud">
-            <p id="score">Score</p>
+            <p id="score">Score: 0</p>
             <p id="remaining">Remaining Ufos: 10</p>
         </div>
     </div>
-    
+
 </body>
 </html>

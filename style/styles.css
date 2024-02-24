@@ -83,3 +83,29 @@ body {
     opacity: 0.5;
     border: 2px solid red;
 }
+
+.pause-screen {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 60px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.start-screen {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 60px;
+    text-align: center;
+    z-index: 1000;
+}
