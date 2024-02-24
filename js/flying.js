@@ -1,3 +1,5 @@
+import { addScore } from './score.js';
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const dufo = document.getElementById('dufo');
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const frameHeight = 290;
         let currentFrame = 0;
         const totalFrames = 8;
-        let frameDuration = 5; // The duration each frame is shown, calculated as above
+        let frameDuration = 10; // The duration each frame is shown, calculated as above
         let frameCounter = 0; // Counter to track how long a frame has been displayed
     
         // Function to animate the explosion frames
@@ -176,15 +178,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //     moveDufo();
     // }
 
-    // function createUFOIndicators(){
-    //     ufosContainer.innerHTML = '';
-    //     for (let i = 10; i >= remainingUfos; i--){
-
-    //         const ufoIndicator = document.createElement('div');
-    //         ufoIndicator.className = 'ufoIndicator';
-    //         ufosContainer.appendChild(ufoIndicator)
-    //     }
-    // }
 
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
@@ -207,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateUFOIndicators(){
         const ufoIndicators = document.querySelectorAll('.ufoIndicator');
         ufoIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < successfulShots ? '0.3' : '0.9';
+            indicator.style.opacity = index < successfulShots ? '0.33' : '0.9';
         });
     }
 
@@ -216,11 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
         bulletIndicators.forEach((indicator, index) => {
             indicator.style.opacity = index < 3 - remainingShots ? '0.33' : '1';
         });
-    }
-
-
-    function addScore(shotsLeft, score) {
-        return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
     }
         
     function updateScore() {
