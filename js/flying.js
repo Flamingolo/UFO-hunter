@@ -115,39 +115,53 @@ document.addEventListener('DOMContentLoaded', function () {
         updateScore(score, remainingUfos)        
     }
 
-    window.addEventListener('keydown', function (event) {
-        if (event.code === 'Escape') {
-            togglePause()
-        }
-
-        if (event.code === 'Space') {
-            togglePause()
-        }
-
-        if (event.code === 'Keyr' || event.code ==='KeyR') {
-            restart()
-        }
-    })
-
-    function togglePause() {
-        isPaused = !isPaused;
-    }
-
     function randomLocation() {
         currentX = Math.random() * maxX;
         currentY = 10;
     }
 
-    function restart() {
+    window.addEventListener('keydown', function (event) {
+        if (event.code === 'Escape' || event.code === 'Space') {
+            if (isPaused) {
+                if (event.code === 'Escape' || event.code === 'Space') {
+                    togglePause();
+                } else if (event.code === 'KeyR' || event.code === 'Keyr') {
+                    restartGame();
+                }
+            } else {
+                togglePause();
+            }
+        }
+    });
+
+    function togglePause() {
+        isPaused = !isPaused;
+    }
+
+    function restartGame() {
         startTime = Date.now();
         randomLocation() 
+        togglePause()
         remainingShots = 3
         remainingUfos = 10
         score = 0
         updateUFOIndicators(successfulShots);
         updateBulletIndicators(remainingShots)
-        updateScore(score, remainingUfos)    
+        updateScore(score, remainingUfos)   
+
     }
+
+    // window.addEventListener('keydown', function (event) {
+    //     if (isPaused) {
+    //         if (event.code === 'Space') {
+    //             togglePause();
+    //         } else if (event.code === 'KeyR') {
+    //             restartGame();
+    //         }
+    //     }
+    // });
+
+    
 
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
@@ -155,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Start dufo movement
     function startGame() {
         createBulletIndicators(remainingShots);
-         
         gameLoop();
     }
 
