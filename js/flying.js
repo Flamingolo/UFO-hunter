@@ -7,6 +7,8 @@ import { updateUFOIndicators } from './score.js';
 import { triggerExplosion } from './explosion.js';
 
 document.addEventListener('DOMContentLoaded', function () {
+ 
+    document.body.style.cursor = 'url(/assets/crosshair.png), auto';
 
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
