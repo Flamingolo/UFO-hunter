@@ -1,9 +1,4 @@
-import { addScore } from './score.js';
-import { updateScore } from './score.js';
-import { createBulletIndicators } from './score.js';
-import { createUFOIndicators } from './score.js';
-import { updateBulletIndicators } from './score.js';
-import { updateUFOIndicators } from './score.js';
+import { addScore, updateScore, createBulletIndicators, createUFOIndicators, updateBulletIndicators, updateUFOIndicators} from './score.js';
 import { triggerExplosion } from './explosion.js';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -13,8 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
-    const pauseScreen = document.getElementById('pauseScreen');
-    const startScreen = document.getElementById('startScreen');
 
     let gameStarted = false;
     let isPaused = true
@@ -67,6 +60,28 @@ document.addEventListener('DOMContentLoaded', function () {
         requestAnimationFrame(gameLoop);
     }
 
+        // Function to respawn the dufo at a random position
+        function respawnDufo() {
+
+            startTime = Date.now();
+    
+            randomLocation()
+    
+            remainingShots = 3
+            remainingUfos--
+    
+            if (remainingUfos < 1) {
+               score = 0
+               successfulShots = 0
+               remainingUfos = 10
+            }
+    
+            // updateBulletIndicators();
+            createUFOIndicators(remainingUfos)
+            updateUFOIndicators(successfulShots);
+            updateScore(score, remainingUfos)        
+        }
+
     function handleClick(event) {
         if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
@@ -96,48 +111,18 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBulletIndicators(remainingShots);
     }
 
-
-    // Function to respawn the dufo at a random position
-    function respawnDufo() {
-
-        startTime = Date.now();
-
-        randomLocation()
-
-        remainingShots = 3
-        remainingUfos--
-
-        if (remainingUfos < 1) {
-           score = 0
-           successfulShots = 0
-           remainingUfos = 10
-        }
-
-        // updateBulletIndicators();
-        createUFOIndicators(remainingUfos)
-        updateUFOIndicators(successfulShots);
-        updateScore(score, remainingUfos)        
-    }
-
-    function randomLocation() {
-        directionX = Math.random() < 0.5 ? -1 : 1;
-        directionY = 1;
-        currentX = Math.random() * maxX;
-        currentY = 10;
-    }
-
-    window.addEventListener('keydown', function (event) {
+    function handlePause (event) {
         if (gameStarted && (event.code === 'Escape' || event.code === 'Space')) {
             togglePause();
             if (isPaused) {
-                pauseScreen.style.display = 'block'
+                document.getElementById('pauseScreen').style.display = 'block'
             } else {
-                pauseScreen.style.display = 'none'
+                document.getElementById('pauseScreen').style.display = 'none'
             }
         }
-    })
+    }
 
-    window.addEventListener('keydown', function (event) {
+     function handleRestart (event) {
         if (isPaused && event.code === 'KeyR' || event.code === 'Keyr') {
             startTime = Date.now();
             randomLocation() 
@@ -147,28 +132,37 @@ document.addEventListener('DOMContentLoaded', function () {
             score = 0
             
             updateUFOIndicators(successfulShots);
+            createUFOIndicators(remainingUfos)
             updateBulletIndicators(remainingShots)
             updateScore(score, remainingUfos)   
-            pauseScreen.style.display = 'none';    
+            document.getElementById('pauseScreen').style.display = 'none';    
         } 
-    })
+    }
+
+    function randomLocation() {
+        directionX = Math.random() < 0.5 ? -1 : 1;
+        directionY = 1;
+        currentX = Math.random() * maxX;
+        currentY = 10;
+    }
 
     function togglePause() {
         isPaused = !isPaused;
     }
 
-    // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
+    document.addEventListener('keydown', handleRestart)
+    document.addEventListener('keydown', handlePause)
 
     function startGame() {
-        startScreen.style.display = 'block';
+        document.getElementById('startScreen').style.display = 'block';
         createBulletIndicators(remainingShots);
         
-        window.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', function (event) {
             if (!gameStarted && event.code === 'Enter') {
                 togglePause();
                 gameLoop();
-                startScreen.style.display = 'none';
+                document.getElementById('startScreen').style.display = 'none';
                 gameStarted = true; // Set gameStarted to true to prevent starting again
             }
         });
