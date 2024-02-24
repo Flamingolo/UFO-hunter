@@ -36,7 +36,7 @@ body {
 .hud {
     display: flex;
     justify-content: space-evenly;
-    flex-direction: column;
+    flex-direction: row-reverse;
     color: yellow;
     align-items: center;
 }

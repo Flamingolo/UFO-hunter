@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     landedUfoContainer.id = 'landedUfosContainer';
 
     document.querySelector('.hud').appendChild(bulletsContainer)
-    document.querySelector('.hud').appendChild(ufosContainer)
-    document.querySelector('.hud').appendChild(landedUfoContainer)
+    document.querySelector('.hudContainer').appendChild(ufosContainer)
+    document.querySelector('.hudContainer').appendChild(landedUfoContainer)
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
