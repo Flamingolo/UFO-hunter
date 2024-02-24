@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const maxY = window.innerHeight - dufo.clientHeight;
     
     let isPaused = false;
-    let shotsLeft = 3;
+    let remainingShots = 3;
     let successfulShots = 0;
     let remainingUfos = 10
     let score = 0
+    let startTime = Date.now();
 
     const ufosContainer = document.createElement('div');
     ufosContainer.id = 'ufosContainer'
@@ -23,12 +24,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
+
     let currentX = Math.random() * maxX;
     let currentY = 10;
 
     //Function to move the dufo within the viewport
-    function moveDufo() {
+    function gameLoop() {
+
         if (!isPaused) {
+            if (Date.now() - startTime > 5000) {
+                respawnDufo()
+            }
             currentX += 1 * directionX; // Speed 
             currentY += 1 * directionY; // Speed 
 
@@ -44,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
             dufo.style.left = `${currentX}px`;
             dufo.style.top = `${currentY}px`;
             
-            requestAnimationFrame(moveDufo);
         }
+        requestAnimationFrame(gameLoop);
     }
 
     function triggerExplosion(x, y) {
@@ -97,9 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the click target is the dufo element
         if (event.target === dufo) {
             successfulShots++;
-            createUFOIndicators()
-            updateUFOIndicators();
-            score = addScore(shotsLeft, score)
+            score = addScore(remainingShots, score)
             updateScore()
             if (!isPaused) {
                 isPaused = true;
@@ -111,37 +115,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
         } else {
-            shotsLeft--
-            if (shotsLeft < 1) {
-                createUFOIndicators()
-                updateUFOIndicators();
-                isPaused = true
-                // Pause for 2 seconds and then respawn
-                setTimeout(() => {
-                    isPaused = false;
-                    respawnDufo();
-                }, 500);
+            remainingShots--
+            if (!isPaused) {
+                if (remainingShots < 1) {
+                    isPaused = true
+                    // Pause for 2 seconds and then respawn
+                    setTimeout(() => {
+                        isPaused = false;
+                        respawnDufo();
+                    }, 500);
+                }
             }
         }
-
         updateBulletIndicators();
     }
 
 
     // Function to respawn the dufo at a random position
     function respawnDufo() {
-        
+
+        startTime = Date.now();
+
         currentX = Math.random() * maxX;
         currentY = 10;
 
-        shotsLeft = 3
+        remainingShots = 3
         remainingUfos--
-
-        // if (shotsLeft === 0 && !isPaused){
-        //     moveUFOToLanded();
-        // } else {
-        //     resetForNextUFO();
-        // }
 
         if (remainingUfos < 1) {
            score = 0
@@ -149,11 +148,10 @@ document.addEventListener('DOMContentLoaded', function () {
            remainingUfos = 10
         }
 
-        updateBulletIndicators();
+        // updateBulletIndicators();
+        createUFOIndicators()
         updateUFOIndicators();
-        updateScore()
-        moveDufo();
-        
+        updateScore()        
     }
 
     // function moveUFOToLanded(){
@@ -178,9 +176,19 @@ document.addEventListener('DOMContentLoaded', function () {
     //     moveDufo();
     // }
 
+    // function createUFOIndicators(){
+    //     ufosContainer.innerHTML = '';
+    //     for (let i = 10; i >= remainingUfos; i--){
+
+    //         const ufoIndicator = document.createElement('div');
+    //         ufoIndicator.className = 'ufoIndicator';
+    //         ufosContainer.appendChild(ufoIndicator)
+    //     }
+    // }
+
     function createUFOIndicators(){
         ufosContainer.innerHTML = '';
-        for (let i = 10; i >= remainingUfos; i--){
+        for (let i = 10; i > remainingUfos; i--){
             const ufoIndicator = document.createElement('div');
             ufoIndicator.className = 'ufoIndicator';
             ufosContainer.appendChild(ufoIndicator)
@@ -189,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function createBulletIndicators(){
         bulletsContainer.innerHTML = '';
-        for (let i = 0; i < shotsLeft; i++){
+        for (let i = 0; i < remainingShots; i++){
             const bulletIndicator = document.createElement('div');
             bulletIndicator.className = 'bulletIndicator';
             bulletsContainer.appendChild(bulletIndicator)
@@ -199,14 +207,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateUFOIndicators(){
         const ufoIndicators = document.querySelectorAll('.ufoIndicator');
         ufoIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index <= successfulShots ? '0.33' : '1';
+            indicator.style.opacity = index < successfulShots ? '0.3' : '0.9';
         });
     }
 
     function updateBulletIndicators(){
         const bulletIndicators = document.querySelectorAll('.bulletIndicator');
         bulletIndicators.forEach((indicator, index) => {
-            indicator.style.opacity = index < 3 - shotsLeft ? '0.33' : '1';
+            indicator.style.opacity = index < 3 - remainingShots ? '0.33' : '1';
         });
     }
 
@@ -218,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateScore() {
         const scoreElement = document.getElementById('score');    
         scoreElement.innerText = `Score: ${score}`;
-        document.getElementById('remaining').innerText = `Remaining: ${remainingUfos}`
+        document.getElementById('remaining').innerText = `Remaining Ufos: ${remainingUfos}`
     }
 
     // Add click event listener to track total shots
@@ -226,9 +234,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start dufo movement
     function startGame() {
-        createUFOIndicators();
+        
         createBulletIndicators();
-        moveDufo();
+        gameLoop();
     }
 
     // Event listener to start the game when the page loads
