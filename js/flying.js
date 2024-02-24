@@ -92,13 +92,13 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBulletIndicators(remainingShots);
     }
 
+
     // Function to respawn the dufo at a random position
     function respawnDufo() {
 
         startTime = Date.now();
 
-        currentX = Math.random() * maxX;
-        currentY = 10;
+        randomLocation()
 
         remainingShots = 3
         remainingUfos--
@@ -115,15 +115,47 @@ document.addEventListener('DOMContentLoaded', function () {
         updateScore(score, remainingUfos)        
     }
 
+    window.addEventListener('keydown', function (event) {
+        if (event.code === 'Escape') {
+            togglePause()
+        }
 
+        if (event.code === 'Space') {
+            togglePause()
+        }
+
+        if (event.code === 'Keyr' || event.code ==='KeyR') {
+            restart()
+        }
+    })
+
+    function togglePause() {
+        isPaused = !isPaused;
+    }
+
+    function randomLocation() {
+        currentX = Math.random() * maxX;
+        currentY = 10;
+    }
+
+    function restart() {
+        startTime = Date.now();
+        randomLocation() 
+        remainingShots = 3
+        remainingUfos = 10
+        score = 0
+        updateUFOIndicators(successfulShots);
+        updateBulletIndicators(remainingShots)
+        updateScore(score, remainingUfos)    
+    }
 
     // Add click event listener to track total shots
     document.addEventListener('click', handleClick);
 
     // Start dufo movement
     function startGame() {
-        
         createBulletIndicators(remainingShots);
+         
         gameLoop();
     }
 
