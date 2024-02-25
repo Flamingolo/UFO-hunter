@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     landedUfoContainer.id = 'landedUfosContainer';
 
     document.querySelector('.hud').appendChild(bulletsContainer)
-    document.querySelector('.hudContainer').appendChild(ufosContainer)
+    document.querySelector('.landingPlace').appendChild(ufosContainer)
     document.querySelector('.hudContainer').appendChild(landedUfoContainer)
 
     const countdownProgressBar = document.getElementById('countdownProgressBar');

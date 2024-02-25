@@ -44,7 +44,7 @@ body {
 .hudContainer {
     width: 100%;
     /* height: 250px; */
- align-self: flex-end;
+ /* align-self: flex-start; */
 
 }
 
@@ -71,17 +71,38 @@ body {
     background-image: url('/assets/bullet.png');
 }
 
-#landedUfosContainer {
+/* #landedUfosContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
-    margin-top: 20px; /* Adds some space between the active UFOs and landed UFOs */
-}
+    margin-top: 20px; 
+} */
 
 .ufoIndicator.landed {
     opacity: 0.5;
     border: 2px solid red;
+}
+
+#countdownProgressBar {
+    width: 100%;
+    height: 20px;
+    background-color: yellow;
+    overflow: hidden;
+    position: relative;
+    align-self: center;
+}
+
+#countdownProgressBar::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease; /* Smooth transition animation */
 }
 
 .pause-screen {
@@ -108,28 +129,4 @@ body {
     padding: 60px;
     text-align: center;
     z-index: 1000;
-}
-
-#countdownProgressBar {
-    width: 100%;
-    height: 20px;
-    background-color: yellow;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    align-self: center;
-}
-
-#countdownProgressBar::before {
-    content: "";
-    display: block;
-    height: 100%;
-    width: 50%;
-    /* background-color: #4caf50; */
-    border-radius: 8px 0 0 8px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: width 0.3s ease; /* Smooth transition animation */
 }
