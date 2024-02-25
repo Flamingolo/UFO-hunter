@@ -31,22 +31,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const countdownProgressBar = document.getElementById('countdownProgressBar');
 
-    
-
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
-
     let currentX = Math.random() * maxX;
     let currentY = 10;
-
-    //move the dufo within the viewport
-    function gameLoop() {
+    
+    function gameLoop() { //move the dufo within the viewport
         
         if (!isPaused) {
             const elapsedTime = Date.now() - startTime;
-            const countdownDuration = 5000; // 5 seconds countdown
+            const countdownDuration = 5000;
 
-            // Update the progress bar width based on elapsed time
             const progress = 100 - (elapsedTime / countdownDuration) * 100;
             countdownProgressBar.style.width = `${progress}%`;
 
@@ -54,10 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 respawnDufo();
             }
             currentX += 1 * directionX; // Speed 
-            currentY += 1 * directionY; // Speed 
+            currentY += 2 * directionY; // Speed 
 
-            // Change direction when reaching the edges
-            if (currentX <= 0 || currentX >= maxX) {
+            if (currentX <= 0 || currentX >= maxX) { // Change direction when reaching the edges
                 directionX *= -1;
             }
 
@@ -71,10 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         requestAnimationFrame(gameLoop);
     }
-
-        // Function to respawn the dufo at a random position
-        function respawnDufo() {
-
+        
+        function respawnDufo() { // Function to respawn the dufo at a random position
             startTime = Date.now();
             randomLocation()
             remainingShots = 3
@@ -164,8 +156,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.addEventListener('click', handleClick);
-    document.addEventListener('keydown', handleRestart)
-    document.addEventListener('keydown', handlePause)
+    window.addEventListener('keydown', function (event) {
+        handlePause(event, isPaused, togglePause, gameStarted, pauseScreen);
+        handleRestart(event, isPaused, togglePause, startTime, randomLocation, remainingShots, remainingUfos, score, updateUFOIndicators, createUFOIndicators, updateBulletIndicators, updateScore, document.getElementById('pauseScreen'));
+    });
 
     function startGame() {
         document.getElementById('startScreen').style.display = 'block';
@@ -181,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
     // Event listener to start the game when the page loads
     window.addEventListener('load', startGame);
 

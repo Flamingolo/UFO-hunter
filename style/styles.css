@@ -29,7 +29,7 @@ body {
     width: 290px;
     height: 290px;
     background-image: url('/assets/explosions.png');
-    background-position: 0 0; /* Starts with first frame */
+    background-position: 0 0;
     background-position: absolute;
 }
 
@@ -43,9 +43,6 @@ body {
 
 .hudContainer {
     width: 100%;
-    /* height: 250px; */
- /* align-self: flex-start; */
-
 }
 
 #ufosContainer, #bulletsContainer {
@@ -71,14 +68,6 @@ body {
     background-image: url('/assets/bullet.png');
 }
 
-/* #landedUfosContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-    margin-top: 20px; 
-} */
-
 .ufoIndicator.landed {
     opacity: 0.5;
     border: 2px solid red;
@@ -102,7 +91,7 @@ body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    transition: width 0.3s ease; /* Smooth transition animation */
+    transition: width 0.3s ease;
 }
 
 .pause-screen {

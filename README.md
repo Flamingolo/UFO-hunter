@@ -1,37 +1,20 @@
-Duck Hunt in js
-# UI
-background color sky blue and image with grass and tree
-when duck flies away then background turns to pink + "fly away"
-"game over"
+# Hunt Ufo's
 
-## Dog
-walking and sniffing
-facing player (crunching and then standing)
-jumping behind the grass (turning around and then flying)
-moving up behind the grass without catching (sad face)
-moving up behind the grass with the duck (happy and duck in one paw)
+Duck Hunt style game, where you can click on the ufos to shoot them down.
+You have 5 seconds and 3 shots per ship. After that, the ships will land.
 
-## Duck
-flying(2 img, wings apart and near the body)
-getting a bullet part and then falling
-from the neck in dogs paw
+First hit gives you 1000, second 500 and third 250 points.
 
-## Scoreboard
-3 bullets
-10 duck hearts(turning from grey to red when it's in the bag)
-scoreboard (1000 1st bullet, 500, 2nd, and 250 with 3rd bullet)
+When you pause the game the 5 second countdown keeps going, don't try to cheat :D
 
-# Game
+## Usage
 
-## Dog
-walking to the center of the screen, facing player and then jumping in the grass
-getting up from the grass, with and without duck
+Start the server with python and open your browser
 
-## Duck
-flies 5 seconds
-Starting from the grass in 80% of viewport at random location, flies 0-90 degrees ???? till the edge of the window and *then bounces from there to 90 degrees(like dvd logo in screensaver)
+http://localhost:8080
 
-## Shooting
-Mouse turns into crosshair when in duck flying area.
-On click bullet--
-when hit then check how many bullets left and count the score according to this
+pyhton3 -m http.server 8080
+
+
+Ingo Hark (ihark)
+Anti Erisalu (antierisalu)
