@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let remainingUfos = 10
     let score = 0
     let startTime = Date.now()
+    
 
     const ufosContainer = document.createElement('div');
     ufosContainer.id = 'ufosContainer'
@@ -28,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.hudContainer').appendChild(ufosContainer)
     document.querySelector('.hudContainer').appendChild(landedUfoContainer)
 
+    const countdownProgressBar = document.getElementById('countdownProgressBar');
+
+    
+
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
 
@@ -36,10 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //move the dufo within the viewport
     function gameLoop() {
-
+        
         if (!isPaused) {
-            if (Date.now() - startTime > 5000) {
-                respawnDufo()
+            const elapsedTime = Date.now() - startTime;
+            const countdownDuration = 5000; // 5 seconds countdown
+
+            // Update the progress bar width based on elapsed time
+            const progress = 100 - (elapsedTime / countdownDuration) * 100;
+            countdownProgressBar.style.width = `${progress}%`;
+
+            if (elapsedTime > countdownDuration) {
+                respawnDufo();
             }
             currentX += 1 * directionX; // Speed 
             currentY += 1 * directionY; // Speed 
@@ -64,9 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function respawnDufo() {
 
             startTime = Date.now();
-    
             randomLocation()
-    
             remainingShots = 3
             remainingUfos--
     
@@ -76,10 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
                remainingUfos = 10
             }
     
-            // updateBulletIndicators();
+            updateBulletIndicators();
             createUFOIndicators(remainingUfos)
             updateUFOIndicators(successfulShots);
-            updateScore(score, remainingUfos)        
+            updateScore(score, remainingUfos)
+            
+            countdownProgressBar.style.width = '0%';
+
         }
 
     function handleClick(event) {
@@ -161,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('keydown', function (event) {
             if (!gameStarted && event.code === 'Enter') {
                 togglePause();
+                startTime = Date.now()
                 gameLoop();
                 document.getElementById('startScreen').style.display = 'none';
                 gameStarted = true; // Set gameStarted to true to prevent starting again
