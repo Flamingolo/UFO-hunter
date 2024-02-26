@@ -1,7 +1,4 @@
-import { playSound } from "./sounds.js";
-
 export function triggerExplosion(x, y) {
-    playSound('explosionSound')
     const explosion = document.getElementById('explosion');
     const dufoWidth = 100;
     const dufoHeight = 100;

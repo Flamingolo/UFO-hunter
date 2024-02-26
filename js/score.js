@@ -10,17 +10,11 @@ export function updateScore(score, remainingUfos) {
 
 export function createUFOIndicators(remainingUfos, successfulShots){
     ufosContainer.innerHTML = '';
-    // for (let i = 10; i > remainingUfos; i--){
-    //     const ufoIndicator = document.createElement('div');
-    //     ufoIndicator.className = 'shotdownUfos';
-    //     ufosContainer.appendChild(ufoIndicator)
-    // }
-
     for (let i = 10; i > remainingUfos; i--){
         const ufoIndicator = document.createElement('div')
         if (i < successfulShots){
             ufoIndicator.className = 'shotdownUfos'
-            ufoIndicator.style.opacity = '0.33'
+            ufoIndicator.style.opacity = '0.25'
         } else {
             ufoIndicator.className = 'landedUfos';
             ufoIndicator.style.opacity = '1';
@@ -31,28 +25,21 @@ export function createUFOIndicators(remainingUfos, successfulShots){
 
 }
 
-export function updateUFOIndicators(landedUfos, shotdownUfos){
-    // const ufoIndicators = document.querySelectorAll('.ufoIndicator');
-    // ufoIndicators.forEach((indicator, index) => {
-    //     indicator.style.opacity = index < successfulShots ? '0.33' : '0.9';
-    // });
-
+export function updateUFOIndicators(landedUfos, shotDownUfos){
     ufosContainer.innerHTML = '';
-    for (let i = 0; i < shotdownUfos; i++){
+    for (let i = 0; i < shotDownUfos; i++){
         const ufoIndicator = document.createElement('div');
         ufoIndicator.className = 'shotdownUfos';
-        ufoIndicator.style.opacity = '0.33'
+        ufoIndicator.style.opacity = '0.25'
         ufosContainer.appendChild(ufoIndicator)
     }
 
-    for (let i = 0; i <= landedUfos; i++){
+    for (let i = 0; i < landedUfos; i++){
         const ufoIndicator = document.createElement('div');
         ufoIndicator.className = 'landedUfos';
         ufoIndicator.style.opacity = '0.9'
         ufosContainer.appendChild(ufoIndicator);
     }
-    
-
 
 }
 

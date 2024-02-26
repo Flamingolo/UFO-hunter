@@ -1,49 +1,45 @@
 import { addScore, updateScore, createBulletIndicators, createUFOIndicators, updateBulletIndicators, updateUFOIndicators} from './score.js';
 import { triggerExplosion } from './explosion.js';
-import { playSound, toggleMute } from './sounds.js';
+import { playSound, playShot, toggleMute } from './sounds.js';
 
 document.addEventListener('DOMContentLoaded', function () {
- 
-    document.body.style.cursor = 'url(/assets/crosshair.png), auto';
 
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
+    
+    const countdownProgressBar = document.getElementById('countdownProgressBar');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const ufosContainer = document.createElement('div');
+    const bulletsContainer = document.createElement('div');
+
+    backgroundMusic.volume = 0.1;
+    ufosContainer.id = 'ufosContainer'
+    bulletsContainer.id = 'bulletsContainer'
 
     let gameStarted = false;
     let isPaused = true
+    let score = 0
+    let startTime = Date.now()
+    
     let remainingShots = 3
     let successfulShots = 0
+
     let remainingUfos = 10
     let shotdownUfos = 0;
     let landedUfos = 0;
     let ufoShotDown = false
-    let score = 0
-    let startTime = Date.now()
     
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    backgroundMusic.volume = 0.5;
-
-
-    const ufosContainer = document.createElement('div');
-    ufosContainer.id = 'ufosContainer'
-    const bulletsContainer = document.createElement('div');
-    bulletsContainer.id = 'bulletsContainer'
-
-    document.querySelector('.hud').appendChild(bulletsContainer)
-    document.querySelector('.landingPlace').appendChild(ufosContainer)
-
-    const countdownProgressBar = document.getElementById('countdownProgressBar');
-
     let directionX = Math.random() < 0.5 ? -1 : 1; // 1 for right, -1 for left
     let directionY = 1; // 1 for down, -1 for up
     let currentX = Math.random() * maxX;
     let currentY = 10;
+
+    document.body.style.cursor = 'url(/assets/crosshair.png), auto';
+    document.querySelector('.hud').appendChild(bulletsContainer)
+    document.querySelector('.landingPlace').appendChild(ufosContainer)
     
     function gameLoop() { //move the dufo within the viewport
-        playSound('backgroundMusic')
-
-
         if (!isPaused) {
             const elapsedTime = Date.now() - startTime;
             const countdownDuration = 5000;
@@ -51,12 +47,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const progress = 100 - (elapsedTime / countdownDuration) * 100;
             countdownProgressBar.style.width = `${progress}%`;
 
+            currentX += 4 * directionX; // Speed 
+            currentY += 2 * directionY; // Speed 
+
             if (elapsedTime > countdownDuration && !ufoShotDown) {
                 respawnDufo();
                 landedUfos++
             }
-            currentX += 1 * directionX; // Speed 
-            currentY += 2 * directionY; // Speed 
 
             if (currentX <= 0 || currentX >= maxX) { // Change direction when reaching the edges
                 directionX *= -1;
@@ -70,35 +67,51 @@ document.addEventListener('DOMContentLoaded', function () {
             dufo.style.top = `${currentY}px`;
             
         }
+        playSound('backgroundMusic')
         requestAnimationFrame(gameLoop);
     }
         
         function respawnDufo() { // Function to respawn the dufo at a random position
             startTime = Date.now();
-            randomLocation()
             remainingShots = 3
             remainingUfos--
             ufoShotDown = false
+            countdownProgressBar.style.width = '0%';
     
             if (remainingUfos < 1) {
                score = 0
                successfulShots = 0
                remainingUfos = 10
+               landedUfos = 0
+               shotdownUfos = 0
+               
             }
-    
+
+            randomLocation()
             updateBulletIndicators();
             createUFOIndicators(remainingShots, successfulShots)
             updateUFOIndicators(landedUfos, shotdownUfos);
             updateScore(score, remainingUfos)
             
-            countdownProgressBar.style.width = '0%';
-
         }
 
     function handleClick(event) {
-        // playSound('gunshotSound')
-        if ((gameStarted && !isPaused) && event.target === dufo) {
+        
+        const dufoRect = dufo.getBoundingClientRect(); // Get the size and position of the dufo element
+        const dufoTop = dufoRect.top - 25;
+        const dufoBottom = dufoRect.bottom;
+        const dufoLeft = dufoRect.left - 25;
+        const dufoRight = dufoRect.right;
+        
+        const clickWithinDufo = // Check if the click occurred within the dufo boundaries
+            event.clientX >= dufoLeft &&
+            event.clientX <= dufoRight &&
+            event.clientY >= dufoTop &&
+            event.clientY <= dufoBottom;
+
+        if (gameStarted && !isPaused && clickWithinDufo) {
             successfulShots++;
+            playShot('explosionSound')
             ufoShotDown = true;
             shotdownUfos++
             score = addScore(remainingShots, score)
@@ -115,8 +128,11 @@ document.addEventListener('DOMContentLoaded', function () {
             
             if (!isPaused) {
                 remainingShots--
+                playShot('gunshotSound')
                 if (remainingShots < 1) {
-                    landedUfos++
+                    if (!ufoShotDown){
+                        landedUfos++
+                    }
                     isPaused = true
                     // playSound('landingSound')
                     setTimeout(() => {
@@ -143,14 +159,17 @@ document.addEventListener('DOMContentLoaded', function () {
      function handleRestart (event) {
         if (isPaused && event.code === 'KeyR' || event.code === 'Keyr') {
             startTime = Date.now();
-            randomLocation() 
-            togglePause()
             remainingShots = 3
             remainingUfos = 10
+            shotdownUfos = 0
+            landedUfos = 0
             score = 0
             
-            updateUFOIndicators(successfulShots);
-            createUFOIndicators(landedUfos, shotdownUfos)
+            randomLocation() 
+            togglePause()
+            createUFOIndicators(remainingUfos, successfulShots)
+            updateUFOIndicators(landedUfos, shotdownUfos);
+            updateBulletIndicators(remainingShots)
             updateBulletIndicators(remainingShots)
             updateScore(score, remainingUfos)   
             document.getElementById('pauseScreen').style.display = 'none';    
@@ -191,7 +210,5 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    // Event listener to start the game when the page loads
-    window.addEventListener('load', startGame);
-
+    window.addEventListener('load', startGame); // Event listener to start the game when the page loads
 });
