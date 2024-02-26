@@ -2,10 +2,10 @@ export function addScore(shotsLeft, score) {
     return score + (shotsLeft === 3 ? 1000 : shotsLeft === 2 ? 500 : shotsLeft === 1 ? 250 : 0) ;
 }
 
-export function updateScore(score, remainingUfos) {
+export function updateScore(score, remainingUfos, landedUfos) {
     const scoreElement = document.getElementById('score');    
     scoreElement.innerText = `Score: ${score}`;
-    document.getElementById('remaining').innerText = `Remaining Ufos: ${remainingUfos}`
+    document.getElementById('remaining').innerText = `Remaining Ufos: ${remainingUfos} / Landed Ufos: ${landedUfos}`
 }
 
 export function createUFOIndicators(remainingUfos, successfulShots){

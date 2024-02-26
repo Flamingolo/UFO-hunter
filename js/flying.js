@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dufo = document.getElementById('dufo');
     const maxX = window.innerWidth - dufo.clientWidth;
     const maxY = window.innerHeight - dufo.clientHeight;
-    
+
     const countdownProgressBar = document.getElementById('countdownProgressBar');
     const backgroundMusic = document.getElementById('backgroundMusic');
     const ufosContainer = document.createElement('div');
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateBulletIndicators();
             createUFOIndicators(remainingShots, successfulShots)
             updateUFOIndicators(landedUfos, shotdownUfos);
-            updateScore(score, remainingUfos)
+            updateScore(score, remainingUfos, landedUfos)
             
         }
 
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ufoShotDown = true;
             shotdownUfos++
             score = addScore(remainingShots, score)
-            updateScore(score, remainingUfos)
+            updateScore(score, remainingUfos, landedUfos)
             if (!isPaused) {
                 isPaused = true;
                 triggerExplosion(currentX, currentY);
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateUFOIndicators(landedUfos, shotdownUfos);
             updateBulletIndicators(remainingShots)
             updateBulletIndicators(remainingShots)
-            updateScore(score, remainingUfos)   
+            updateScore(score, remainingUfos, landedUfos)   
             document.getElementById('pauseScreen').style.display = 'none';    
         } 
     }
