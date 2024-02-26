@@ -17,41 +17,42 @@ export function createUFOIndicators(remainingUfos, successfulShots){
     // }
 
     for (let i = 10; i > remainingUfos; i--){
-        const ufoIndicator = document.createElement('div');
+        const ufoIndicator = document.createElement('div')
         if (i < successfulShots){
-            ufoIndicator.className = 'shotdownUfos';
-            ufoIndicator.style.opacity = '0.33';
-            ufoIndicator.style.float = 'left'
-        } else {
+            ufoIndicator.className = 'shotdownUfos'
+            ufoIndicator.style.opacity = '0.33'
+        } else if (i < ) {
             ufoIndicator.className = 'landedUfos';
-            ufoIndicator.style.opacity = '1'
-            ufoIndicator.style.float = 'left'
+            ufoIndicator.style.opacity = '1';
+            ufoIndicator.style.marginLeft = 'auto'
         }
         ufosContainer.appendChild(ufoIndicator)
     }
 
 }
 
-export function updateUFOIndicators(successfulShots){
+export function updateUFOIndicators(landedUfos, shotdownUfos){
     // const ufoIndicators = document.querySelectorAll('.ufoIndicator');
     // ufoIndicators.forEach((indicator, index) => {
     //     indicator.style.opacity = index < successfulShots ? '0.33' : '0.9';
     // });
 
-    const shotdownUfos = document.getElementById('.shotdownUfos');
-    const landedUfos = document.getElementById('.landedUfos');
-
-    if (shotdownUfos) {
-        shotdownUfos.forEach((indicator) => {
-            indicator.style.opacity = '0.33'
-        })
+    ufosContainer.innerHTML = '';
+    for (let i = 0; i < shotdownUfos; i++){
+        const ufoIndicator = document.createElement('div');
+        ufoIndicator.className = 'shotdownUfos';
+        ufoIndicator.style.opacity = '0.33'
+        ufosContainer.appendChild(ufoIndicator)
     }
 
-    if (landedUfos) {
-        landedUfos.forEach((indicator) => {
-           indicator.style.opacity = '1'
-        })
+    for (let i = 0; i <= landedUfos; i++){
+        const ufoIndicator = document.createElement('div');
+        ufoIndicator.className = 'landedUfos';
+        ufoIndicator.style.opacity = '0.9'
+        ufosContainer.appendChild(ufoIndicator);
     }
+    
+
 
 }
 

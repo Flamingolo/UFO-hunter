@@ -20,7 +20,7 @@ export function triggerExplosion(x, y) {
     const frameHeight = 290;
     let currentFrame = 0;
     const totalFrames = 8;
-    let frameDuration = 10; // The duration each frame is shown, calculated as above
+    let frameDuration = 9; // The duration each frame is shown, calculated as above
     let frameCounter = 0; // Counter to track how long a frame has been displayed
 
     function animateExplosion() { // Function to animate the explosion frames

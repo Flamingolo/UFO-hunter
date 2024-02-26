@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let remainingShots = 3
     let successfulShots = 0
     let remainingUfos = 10
+    let shotdownUfos = 0;
+    let landedUfos = 0;
     let score = 0
     let startTime = Date.now()
     
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (elapsedTime > countdownDuration) {
                 respawnDufo();
+                landedUfos++
             }
             currentX += 1 * directionX; // Speed 
             currentY += 2 * directionY; // Speed 
@@ -82,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
     
             updateBulletIndicators();
-            createUFOIndicators(remainingUfos, successfulShots)
-            updateUFOIndicators(successfulShots);
+            createUFOIndicators(remainingShots, successfulShots)
+            updateUFOIndicators(landedUfos, shotdownUfos);
             updateScore(score, remainingUfos)
             
             countdownProgressBar.style.width = '0%';
@@ -94,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // playSound('gunshotSound')
         if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
+            shotdownUfos++;
             score = addScore(remainingShots, score)
             updateScore(score, remainingUfos)
             if (!isPaused) {
@@ -109,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!isPaused) {
                 remainingShots--
                 if (remainingShots < 1) {
+                    landedUfos++
                     isPaused = true
                     // playSound('landingSound')
                     setTimeout(() => {
@@ -142,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
             score = 0
             
             updateUFOIndicators(successfulShots);
-            createUFOIndicators(remainingUfos, successfulShots)
+            createUFOIndicators(landedUfos, shotdownUfos)
             updateBulletIndicators(remainingShots)
             updateScore(score, remainingUfos)   
             document.getElementById('pauseScreen').style.display = 'none';    

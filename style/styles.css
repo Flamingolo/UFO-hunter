@@ -50,6 +50,7 @@ body {
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
+    width: 100%;
 }
 
 .shotdownUfos{
@@ -57,9 +58,8 @@ body {
     height: 75px;
     background-image: url('/assets/ufo_sprite.png');
     background-size: cover;
-    /* display: inline-block; */
+    display: inline-block;
     margin: 2px;
-    float: left;
     
 }
 
@@ -68,9 +68,8 @@ body {
     height: 75px;
     background-image: url('/assets/ufo_sprite.png');
     background-size: cover;
-    /* display: inline-block; */
+    display: inline-block;
     margin: 2px;
-    float: right;
 }
 
 .bulletIndicator {
