@@ -21,7 +21,7 @@ export function createUFOIndicators(remainingUfos, successfulShots){
         if (i < successfulShots){
             ufoIndicator.className = 'shotdownUfos'
             ufoIndicator.style.opacity = '0.33'
-        } else if (i < ) {
+        } else {
             ufoIndicator.className = 'landedUfos';
             ufoIndicator.style.opacity = '1';
             ufoIndicator.style.marginLeft = 'auto'

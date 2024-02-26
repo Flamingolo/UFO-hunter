@@ -1,6 +1,6 @@
 import { addScore, updateScore, createBulletIndicators, createUFOIndicators, updateBulletIndicators, updateUFOIndicators} from './score.js';
 import { triggerExplosion } from './explosion.js';
-import { playSound, pauseSound } from './sounds.js';
+import { playSound, toggleMute } from './sounds.js';
 
 document.addEventListener('DOMContentLoaded', function () {
  
@@ -167,6 +167,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('click', handleClick);
     window.addEventListener('keydown', function (event) {
+        if (event.code === 'KeyM'){
+            toggleMute();
+        }
         handlePause(event, isPaused, togglePause, gameStarted, pauseScreen);
         handleRestart(event, isPaused, togglePause, startTime, randomLocation, remainingShots, remainingUfos, score, updateUFOIndicators, createUFOIndicators, updateBulletIndicators, updateScore, document.getElementById('pauseScreen'));
     });
