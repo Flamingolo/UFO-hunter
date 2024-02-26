@@ -16,14 +16,32 @@ body {
     height: 100%;    
 }
 
+@keyframes changeColor {
+    0% { background-image: url('/assets/ufo4.png'); }
+    25% { background-image: url('/assets/ufo1.png'); }
+    50% { background-image: url('/assets/ufo2.png'); }
+    75% { background-image: url('/assets/ufo3.png'); }
+    100% { background-image: url('/assets/ufo5.png'); }
+}
+
 .dufo {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    border: 50px;
+    animation: changeColor 5s infinite;
+}
+
+
+/* .dufo {
     width: 100px;
     height: 50px;
     background-image: url('/assets/ufo.png');
     position: absolute;
     top: 50%;
     border: 50px;
-}
+} */
 
 #explosion{
     width: 290px;
@@ -63,19 +81,16 @@ body {
 
 .shotdownUfos{
     width: 100px;
-    height: 75px;
-    background-image: url('/assets/ufo_sprite.png');
-    background-size: cover;
+    height: 50px;
+    background-image: url('/assets/ufo.png');
     float: left;
     margin: 2px;
-    
 }
 
 .landedUfos{
     width: 100px;
-    height: 75px;
-    background-image: url('/assets/ufo_sprite.png');
-    background-size: cover;
+    height: 50px;
+    animation: changeColor 7s infinite;
     float: right;
     margin: 2px;
 }
@@ -85,7 +100,6 @@ body {
     height: 25px;
     background-image: url('/assets/bullet.png');
 }
-
 
 
 #countdownProgressBar {
