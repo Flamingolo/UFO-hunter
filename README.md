@@ -7,6 +7,10 @@ First hit gives you 1000, second 500 and third 250 points.
 
 When you pause the game the 5 second countdown keeps going, don't try to cheat :D
 
+audit questions:
+
+https://github.com/01-edu/public/tree/master/subjects/make-your-game/audit
+
 ## Usage
 
 Start the server with python and open your browser
