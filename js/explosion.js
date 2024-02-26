@@ -1,4 +1,4 @@
-import { playSound, pauseSound } from "./sounds.js";
+import { playSound } from "./sounds.js";
 
 export function triggerExplosion(x, y) {
     playSound('explosionSound')

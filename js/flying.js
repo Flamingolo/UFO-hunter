@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let remainingUfos = 10
     let shotdownUfos = 0;
     let landedUfos = 0;
+    let ufoShotDown = false
     let score = 0
     let startTime = Date.now()
     
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const progress = 100 - (elapsedTime / countdownDuration) * 100;
             countdownProgressBar.style.width = `${progress}%`;
 
-            if (elapsedTime > countdownDuration) {
+            if (elapsedTime > countdownDuration && !ufoShotDown) {
                 respawnDufo();
                 landedUfos++
             }
@@ -77,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             randomLocation()
             remainingShots = 3
             remainingUfos--
+            ufoShotDown = false
     
             if (remainingUfos < 1) {
                score = 0
@@ -97,7 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // playSound('gunshotSound')
         if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
-            shotdownUfos++;
+            ufoShotDown = true;
+            shotdownUfos++
             score = addScore(remainingShots, score)
             updateScore(score, remainingUfos)
             if (!isPaused) {
