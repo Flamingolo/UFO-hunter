@@ -1,5 +1,6 @@
 import { addScore, updateScore, createBulletIndicators, createUFOIndicators, updateBulletIndicators, updateUFOIndicators} from './score.js';
 import { triggerExplosion } from './explosion.js';
+import { playSound, pauseSound } from './sounds.js';
 
 document.addEventListener('DOMContentLoaded', function () {
  
@@ -17,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let score = 0
     let startTime = Date.now()
     
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.volume = 0.5;
+
 
     const ufosContainer = document.createElement('div');
     ufosContainer.id = 'ufosContainer'
@@ -37,7 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentY = 10;
     
     function gameLoop() { //move the dufo within the viewport
-        
+        playSound('backgroundMusic')
+
+
         if (!isPaused) {
             const elapsedTime = Date.now() - startTime;
             const countdownDuration = 5000;
@@ -88,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     function handleClick(event) {
+        playSound('gunshotSound')
         if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
             score = addScore(remainingShots, score)
@@ -106,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 remainingShots--
                 if (remainingShots < 1) {
                     isPaused = true
+                    playSound('landingSound')
                     setTimeout(() => {
                         isPaused = false;
                         respawnDufo();
