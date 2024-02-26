@@ -26,12 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
     ufosContainer.id = 'ufosContainer'
     const bulletsContainer = document.createElement('div');
     bulletsContainer.id = 'bulletsContainer'
-    const landedUfoContainer = document.createElement('div');
-    landedUfoContainer.id = 'landedUfosContainer';
 
     document.querySelector('.hud').appendChild(bulletsContainer)
     document.querySelector('.landingPlace').appendChild(ufosContainer)
-    document.querySelector('.hudContainer').appendChild(landedUfoContainer)
 
     const countdownProgressBar = document.getElementById('countdownProgressBar');
 
@@ -85,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
     
             updateBulletIndicators();
-            createUFOIndicators(remainingUfos)
+            createUFOIndicators(remainingUfos, successfulShots)
             updateUFOIndicators(successfulShots);
             updateScore(score, remainingUfos)
             
@@ -94,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     function handleClick(event) {
-        playSound('gunshotSound')
+        // playSound('gunshotSound')
         if ((gameStarted && !isPaused) && event.target === dufo) {
             successfulShots++;
             score = addScore(remainingShots, score)
@@ -113,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 remainingShots--
                 if (remainingShots < 1) {
                     isPaused = true
-                    playSound('landingSound')
+                    // playSound('landingSound')
                     setTimeout(() => {
                         isPaused = false;
                         respawnDufo();
@@ -145,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
             score = 0
             
             updateUFOIndicators(successfulShots);
-            createUFOIndicators(remainingUfos)
+            createUFOIndicators(remainingUfos, successfulShots)
             updateBulletIndicators(remainingShots)
             updateScore(score, remainingUfos)   
             document.getElementById('pauseScreen').style.display = 'none';    

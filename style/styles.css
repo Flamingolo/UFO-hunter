@@ -52,14 +52,25 @@ body {
     align-items: center;
 }
 
-.ufoIndicator {
+.shotdownUfos{
     width: 100px;
     height: 75px;
     background-image: url('/assets/ufo_sprite.png');
     background-size: cover;
-    display: inline-block;
+    /* display: inline-block; */
     margin: 2px;
+    float: left;
     
+}
+
+.landedUfos{
+    width: 100px;
+    height: 75px;
+    background-image: url('/assets/ufo_sprite.png');
+    background-size: cover;
+    /* display: inline-block; */
+    margin: 2px;
+    float: right;
 }
 
 .bulletIndicator {
@@ -68,10 +79,7 @@ body {
     background-image: url('/assets/bullet.png');
 }
 
-.ufoIndicator.landed {
-    opacity: 0.5;
-    border: 2px solid red;
-}
+
 
 #countdownProgressBar {
     width: 100%;
