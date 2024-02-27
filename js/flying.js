@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             currentY += 2 * directionY; // Speed 
 
             if (elapsedTime > countdownDuration && !ufoShotDown) {
-                respawnDufo();
                 landedUfos++
+                respawnDufo();
             }
 
             if (currentX <= 0 || currentX >= maxX) { // Change direction when reaching the edges
