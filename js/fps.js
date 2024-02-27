@@ -1,6 +1,6 @@
-export function updateFpsDisplay(){
+export function updateFpsDisplay(fps){
     const fpsCounter = document.getElementById('fps-counter')
     if (fpsCounter){
-        fpsCounter.textContent = `FPS: ${Math.round(fps)}`
+        fpsCounter.innerText = `FPS: ${Math.round(fps)}`
     }
 }

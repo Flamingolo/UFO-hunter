@@ -6,8 +6,8 @@ import { updateFpsDisplay } from './fps.js';
 document.addEventListener('DOMContentLoaded', function () {
 
     const dufo = document.getElementById('dufo');
-    const maxX = window.innerWidth - dufo.clientWidth;
-    const maxY = window.innerHeight - dufo.clientHeight;
+    let maxX = window.innerWidth - dufo.clientWidth;
+    let maxY = window.innerHeight - dufo.clientHeight;
 
     const countdownProgressBar = document.getElementById('countdownProgressBar');
     const backgroundMusic = document.getElementById('backgroundMusic');
@@ -22,8 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPaused = true
     let score = 0
     let startTime = Date.now()
+    let isFpsCapped = true
     let lastFrameTimeMs = 0
-    let maxFps = 144;
+    let maxFps = 300;
     let fps = 60;
     let framesThisSecond = 0;
     let lastFpsUpdate = 0;
@@ -51,15 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 requestAnimationFrame(gameLoop);
                 return;
             }
-
-                const deltaTime = timestamp - lastFrameTimeMs;
+            
                 lastFrameTimeMs = timestamp
 
                 if (timestamp > lastFpsUpdate + 1000){
                     fps = 0.25 * framesThisSecond + (1 - 0.25) * fps;
                     lastFpsUpdate = timestamp;
                     framesThisSecond = 0;
-                    updateFpsDisplay();
+                    updateFpsDisplay(fps);
                 }
                 framesThisSecond++
 
@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 dufo.style.top = `${currentY}px`;
 
         }
+
         playSound('backgroundMusic')
         requestAnimationFrame(gameLoop);
     }
@@ -99,6 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
             remainingUfos--
             ufoShotDown = false
             countdownProgressBar.style.width = '0%';
+            maxX = window.innerWidth - dufo.clientWidth;
+            maxY = window.innerHeight - dufo.clientHeight;
     
             if (remainingUfos < 1) {
                score = 0
@@ -214,6 +217,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.code === 'KeyM'){
             toggleMute();
         }
+
+        if (event.code === 'KeyF' || 'Keyf') {
+            isFpsCapped = !isFpsCapped;
+            maxFps = isFpsCapped ? 60 : 300;
+            console.log(maxFps)
+        }
+
         handlePause(event, isPaused, togglePause, gameStarted, pauseScreen);
         handleRestart(event, isPaused, togglePause, startTime, randomLocation, remainingShots, remainingUfos, score, updateUFOIndicators, createUFOIndicators, updateBulletIndicators, updateScore, document.getElementById('pauseScreen'));
     });

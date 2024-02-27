@@ -12,6 +12,18 @@ body {
     
 }
 
+.fps-counter {
+   position: fixed; /* Keeps the FPS counter in the same position on the screen */
+   top: 50px; /* Distance from the top of the screen */
+   left: 50px; /* Distance from the left of the screen */
+   color: white; /* Text color */
+   background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+   padding: 5px; /* Some padding around the text */
+   border-radius: 5px; /* Rounded corners for aesthetics */
+   z-index: 1000; /* Makes sure it's on top of other elements */
+   font-family: 'Consolas', 'Monaco', monospace; /* A monospaced font for better readability */
+}
+
 .game-container {
     height: 100%;    
 }
