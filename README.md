@@ -17,7 +17,7 @@ Start the server with python and open your browser
 
 http://localhost:8080
 
-pyhton3 -m http.server 8080
+python3 -m http.server 8080
 
 
 Ingo Hark (ihark)
