@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPaused = true
     let score = 0
     let startTime = Date.now()
+    let lastTime = 0;
+    const fps = 60;
+    const frameDelay = 1000 / fps;
     
     let remainingShots = 3
     let successfulShots = 0
@@ -41,31 +44,32 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function gameLoop() { //move the dufo within the viewport
         if (!isPaused) {
-            const elapsedTime = Date.now() - startTime;
-            const countdownDuration = 5000;
+            if (!lastTime || timestamp - lastTime >= frameDelay){
+                const elapsedTime = Date.now() - startTime;
+                const countdownDuration = 5000;
 
-            const progress = 100 - (elapsedTime / countdownDuration) * 100;
-            countdownProgressBar.style.width = `${progress}%`;
+                const progress = 100 - (elapsedTime / countdownDuration) * 100;
+                countdownProgressBar.style.width = `${progress}%`;
 
-            currentX += 4 * directionX; // Speed 
-            currentY += 2 * directionY; // Speed 
+                currentX += 4 * directionX; // Speed 
+                currentY += 2 * directionY; // Speed 
 
-            if (elapsedTime > countdownDuration && !ufoShotDown) {
-                landedUfos++
-                respawnDufo();
+                if (elapsedTime > countdownDuration && !ufoShotDown) {
+                    landedUfos++
+                    respawnDufo();
+                }
+
+                if (currentX <= 0 || currentX >= maxX) { // Change direction when reaching the edges
+                    directionX *= -1;
+                }
+
+                if (currentY <= 0 || currentY >= maxY - 200) {
+                    directionY *= -1;
+                }
+
+                dufo.style.left = `${currentX}px`;
+                dufo.style.top = `${currentY}px`;
             }
-
-            if (currentX <= 0 || currentX >= maxX) { // Change direction when reaching the edges
-                directionX *= -1;
-            }
-
-            if (currentY <= 0 || currentY >= maxY - 200) {
-                directionY *= -1;
-            }
-
-            dufo.style.left = `${currentX}px`;
-            dufo.style.top = `${currentY}px`;
-            
         }
         playSound('backgroundMusic')
         requestAnimationFrame(gameLoop);
