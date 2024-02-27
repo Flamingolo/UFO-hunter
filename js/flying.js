@@ -1,6 +1,7 @@
 import { addScore, updateScore, createBulletIndicators, createUFOIndicators, updateBulletIndicators, updateUFOIndicators} from './score.js';
 import { triggerExplosion } from './explosion.js';
 import { playSound, playShot, toggleMute } from './sounds.js';
+import { updateFpsDisplay } from './fps.js';
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -21,9 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPaused = true
     let score = 0
     let startTime = Date.now()
-    let lastTime = 0;
-    const fps = 60;
-    const frameDelay = 1000 / fps;
+    let lastFrameTimeMs = 0
+    let maxFps = 144;
+    let fps = 60;
+    let framesThisSecond = 0;
+    let lastFpsUpdate = 0;
     
     let remainingShots = 3
     let successfulShots = 0
@@ -42,9 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.hud').appendChild(bulletsContainer)
     document.querySelector('.landingPlace').appendChild(ufosContainer)
     
-    function gameLoop() { //move the dufo within the viewport
+    function gameLoop(timestamp) { //move the dufo within the viewport
         if (!isPaused) {
-            if (!lastTime || timestamp - lastTime >= frameDelay){
+            if (timestamp < lastFrameTimeMs + (1000 / maxFps)){
+                requestAnimationFrame(gameLoop);
+                return;
+            }
+
+                const deltaTime = timestamp - lastFrameTimeMs;
+                lastFrameTimeMs = timestamp
+
+                if (timestamp > lastFpsUpdate + 1000){
+                    fps = 0.25 * framesThisSecond + (1 - 0.25) * fps;
+                    lastFpsUpdate = timestamp;
+                    framesThisSecond = 0;
+                    updateFpsDisplay();
+                }
+                framesThisSecond++
+
                 const elapsedTime = Date.now() - startTime;
                 const countdownDuration = 5000;
 
@@ -69,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 dufo.style.left = `${currentX}px`;
                 dufo.style.top = `${currentY}px`;
-            }
+
         }
         playSound('backgroundMusic')
         requestAnimationFrame(gameLoop);
